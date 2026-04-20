@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    main menu-->
+    <menuitem id="menu_real_estate_root" name="Real estate"/>
+
+<!--    sub menu PROPERTY MANAGEMENT-->
+    <menuitem id="menu_real_estate_property_management" parent="menu_real_estate_root" name="Property Management" />
+<!--sub menu WITH ACTIONS    -->
+    <menuitem id="menu_real_estate_property" parent="menu_real_estate_property_management" name="Property" action="action_real_estate"/>
+
+    <!--    sub menu CONFIGURATION -->
+    <menuitem id="menu_real_estate_property_configuration" parent="menu_real_estate_root" name="Configuration" />
+    <!--    sub menu WITH ACTIONS-->
+    <menuitem id="menu_real_estate_property_types" parent="menu_real_estate_property_configuration" name="property types" action="action_property_types"/>
+    <menuitem id="menu_real_estate_property_tags" parent="menu_real_estate_property_configuration" name="Property tags" action="action_property_tags"/>
+    <menuitem id="menu_real_estate_property_offer" parent="menu_real_estate_property_configuration" name="Property offers" action="action_property_offers"/>
+    <menuitem id="menu_abin_task" parent="menu_real_estate_property_configuration" name="Abin task" action="action_abin_task"/>
+</odoo>

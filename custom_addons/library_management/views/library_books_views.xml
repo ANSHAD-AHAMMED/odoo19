@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- Action -->
+    <record id="action_books" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No offers added yet</p>
+        </field>
+    </record>
+
+    <!--    SEARCH VIEW -->
+    <record id="view_library__search" model="ir.ui.view">
+        <field name="name">library.book.search</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="author_id"/>
+                <field name="isbn"/>
+                <field name="tag_ids"/>
+
+                <filter name="Author" context="{'group_by' : 'author_id'}"/>
+                <filter name="Genre" context="{'group_by' : 'genre_id'}"/>
+                <filter name="Publisher" context="{'group_by' : 'publisher_id'}"/>
+                <filter name="Publish date" context="{'group_by' : 'publish_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_library_book_list" model="ir.ui.view">
+        <field name="name">library.book.list</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <list decoration-success="status in ['available']" decoration-danger="status in ['unavailable']" decoration-warning="status in ['coming_soon']">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="cover_image"/>
+                <field name="isbn"/>
+                <field name="price"/>
+                <field name="cost"/>
+                <field name="status"/>
+                <field name="sequence_number"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_book_form" model="ir.ui.view">
+        <field name="name">library.book.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="status" widget="statusbar"
+                           status_visible="coming_soon,available,unavailable,"/>
+                </header>
+                <sheet>
+                    <field name="cover_image" class="oe_avatar" widget="image"/>
+                    <div>
+                        <h1>
+                            <field name="sequence_number"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="isbn"/>
+                            <field name="price"/>
+                            <field name="cost"/>
+                            <field name="publish_date"/>
+                        </group>
+                        <group>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="author_id"/>
+                            <field name="publisher_id"/>
+                            <field name="genre_id"/>
+                            <field name="status"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="seq_library_book" model="ir.sequence">
+        <field name="name">Library Book reference</field>
+        <field name="code">library.book</field>
+        <field name="prefix">BKNO</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

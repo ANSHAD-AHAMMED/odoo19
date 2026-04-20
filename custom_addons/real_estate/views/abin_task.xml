@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_abin_task" model="ir.actions.act_window">
+        <field name="name">Abin Task</field>
+        <field name="res_model">abin.task</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">nothing here</p>
+        </field>
+    </record>
+
+    <!--    <header>-->
+    <!--        <button name="action_approve_loan"-->
+    <!--                string="Approve Loan"-->
+    <!--                type="object"-->
+    <!--                class="btn-primary"-->
+    <!--                states="draft"/>-->
+
+    <!--        <field name="state" widget="statusbar"-->
+    <!--               statusbar_visible="draft,approved,ongoing,paid"/>-->
+    <!--    </header>-->
+
+
+    <!--    note: inside sheet:-->
+    <!--    <div class="oe_button_box" name="button_box">-->
+
+    <!--        <button name="action_view_installments"-->
+    <!--                type="object"-->
+    <!--                class="oe_stat_button"-->
+    <!--                icon="fa-list">-->
+
+    <!--            <field name="loan_line_count" widget="statinfo"-->
+    <!--                   string="Installments"/>-->
+
+    <!--        </button>-->
+
+    <!--    </div>-->
+
+
+    <!-- Form View -->
+    <record id="view_abin-task_form" model="ir.ui.view">
+        <field name="name">abin.task.form</field>
+        <field name="model">abin.task</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <header>
+                        <button name="customer_details" type="object"
+                                string="customer details" title="customer_details"/>
+                        <button name="product_details" type="object"
+                                string="product details" title="product_details"/>
+                        <button name="purchase_details" type="object"
+                                string="Purchase details" title="purchase details"/>
+                    </header>
+                    <group>
+                        <field name="partner_name"/>
+                        <field name="product_id"/>
+                        <field name="purchase_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    <button name="action_pay_installment"-->
+    <!--        string="Pay Installment"-->
+    <!--        type="object"-->
+    <!--        class="btn-primary"-->
+    <!--        states="ongoing"/>-->
+
+
+</odoo>

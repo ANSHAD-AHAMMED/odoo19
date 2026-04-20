@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_library_settings" model="ir.actions.act_window">
+        <field name="name">Library Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module': 'library_management'}</field>
+    </record>
+
+    <!--    form view-->
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">
+            res.config.settings.view.form.inherit.library_management.library_settings
+        </field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Library Management"
+                     string="Library Management" name="library_management">
+                    <block title="Library Management Settings"
+                           name="library_management">
+
+                        <setting string="maximum borrow days"
+                                 help="maximum borrow days"
+                                 id="maximum_borrow_days_setting">
+                            <field name="max_borrow_days"/>
+                        </setting>
+
+                        <setting string="Reminder days"
+                                 help="remind days before due date"
+                                 id="reminder_days_setting">
+                            <field name="reminder_days"/>
+                        </setting>
+
+                        <setting string="penalty per hour"
+                                 help="penalty per hour if the return is over due"
+                                 id="penalty_per_hour_setting">
+                            <field name="penalty_per_hour"/>
+                        </setting>
+
+                        <setting string="Maximum books to borrow"
+                                 help="Maximum books to borrow"
+                                 id="maximum_borrow_books_setting">
+                            <field name="maximum_borrow_books"/>
+                        </setting>
+
+                        <setting string="Maximum late return"
+                                 help="Maximum late return for a customer"
+                                 id="maximum_late_return_setting">
+                            <field name="max_late_returns"/>
+                        </setting>
+
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

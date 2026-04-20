@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="associated_product_inherited_sales_model_view_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="associated_product" string="Associated Product" readonly="state in ['sale', 'cancel']"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

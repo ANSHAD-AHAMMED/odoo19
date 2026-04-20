@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="email_template_overdue" model="mail.template">
+        <field name="name">Book Overdue Notice</field>
+        <field name="model_id" ref="library_management.model_library_checkout"/>
+        <field name="subject">Overdue Notice</field>
+        <field name="email_to">{{object.partner_id.email}}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Hello <t t-out="object.partner_id.name"></t>,</p>
+                <p>Your borrowed books are now overdue.</p>
+                <ul>
+                    <t t-foreach="object.checkout_line_ids" t-as="line">
+                        <li>
+                            <t t-out="line.book_id.name"/>
+                        </li>
+                    </t>
+                </ul>
+                <p>Due date: <t t-out="object.due_date"/> </p>
+            </div>
+        </field>
+    </record>
+</odoo>

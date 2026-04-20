@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    automatic sequence number-->
+    <record id="seq_employee_laon" model="ir.sequence">
+        <field name="name">employee loan</field>
+        <field name="code">employee.loan</field>
+        <field name="prefix">EMPL</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

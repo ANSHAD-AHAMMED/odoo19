@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    action-->
+    <record id="action_wizard_return_checkout" model="ir.actions.act_window">
+        <field name="name">Suggestions</field>
+        <field name="res_model">suggestion.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_view_types">list,kanban</field>
+    </record>
+
+    <record id="view_suggestion_wizard_form" model="ir.ui.view">
+        <field name="name">suggestion.wizard.form</field>
+        <field name="model">suggestion.wizard</field>
+        <field name="arch" type="xml">
+
+            <form string="Book Suggestions">
+
+                <group>
+                    <field name="recommended_book_ids"/>
+                </group>
+
+                <footer>
+                    <button name="action_apply"
+                            type="object"
+                            string="Apply"
+                            class="btn-primary"/>
+                    <button string="Close" special="cancel"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+</odoo>

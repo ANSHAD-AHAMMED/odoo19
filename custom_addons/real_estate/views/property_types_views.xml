@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action -->
+    <record id="action_property_types_offers" model="ir.actions.act_window">
+        <field name="name">Property OFFERS</field>
+        <field name="res_model">property.offer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_property_types" model="ir.actions.act_window">
+        <field name="name">Property types</field>
+        <field name="res_model">property_types</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">add your property type here</p>
+        </field>
+    </record>
+
+    <!--    list view-->
+    <record id="view_property_types" model="ir.ui.view">
+        <field name="name">property_types.list</field>
+        <field name="model">property_types</field>
+        <field name="arch" type="xml">
+            <list string="property_types">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_property_types_form" model="ir.ui.view">
+        <field name="name">property_types.form</field>
+        <field name="model">property_types</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+<!--                    -->
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_property_types_offers" type="object"
+                                class="oe_stat_button" icon="fa-money">
+                            <field name="offer_count" widget="statinfo" string="offers"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Properties">
+                            <field name="line_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="expected_price"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

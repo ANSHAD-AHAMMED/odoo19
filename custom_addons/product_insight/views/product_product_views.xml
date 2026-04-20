@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherited_model_view_form" model="ir.ui.view">
+        <field name="name">product.product.form.inherit.product.product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <button name="action_open_price_wizard"
+                        type="object"
+                        class="oe_stat_button"
+                        string="Open price wizard">
+                </button>
+
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Product Insight">
+                    <group>
+                        <field name="internal_remark" string="Internal Remark:"/>
+                        <field name="discount" string="Discount:"/>
+                        <field name="price_category" string="Price Category:"/>
+                    </group>
+                </page>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

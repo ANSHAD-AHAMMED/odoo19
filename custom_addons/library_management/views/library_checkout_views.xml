@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Action -->
+    <record id="action_checkout" model="ir.actions.act_window">
+        <field name="name">Checkout</field>
+        <field name="res_model">library.checkout</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No offers added yet</p>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_library_checkout_list" model="ir.ui.view">
+        <field name="name">library.checkout.list</field>
+        <field name="model">library.checkout</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence_number"/>
+                <field name="partner_id"/>
+                <field name="checkout_date"/>
+                <field name="due_date"/>
+                <field name="return_date"/>
+                <field name="late_days"/>
+                <field name="penalty"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_checkout_form" model="ir.ui.view">
+        <field name="name">library.checkout.form</field>
+        <field name="model">library.checkout</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="confirm_checkout" type="object" string="Confirm" class="oe_highlight"
+                            title="Mark as confirm"
+                            invisible="state in ['check_out','returned','over_due','cancel']"/>
+
+                    <button name="return_checkout" type="object" string="Return" class="oe_highlight"
+                            title="Mark as return"
+                            invisible="state in ['new','returned','cancel']"/>
+
+                    <button name="cancel_checkout" type="object" string="Cancel" class="oe_highlight"
+                            title="Mark as return"
+                            invisible="state in ['cancel']"/>
+
+                    <field name="state" widget="statusbar"
+                           status_visible="new,check_out,over_due,returned,cancel"/>
+                </header>
+                <!--                                THIS IS A SALES WARNING LIKE FEATURE-->
+                <!--                                <div class="alert alert-warning" role="alert" invisible="not late_return_warning_text">-->
+                <!--                                    <field name="late_return_warning_text" class="fw-bold"/>-->
+                <!--                                </div>-->
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice_checkout"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                invisible="invoice_count == 0">
+
+                            <field name="invoice_amount" widget="statinfo" string="Invoiced"/>
+                        </button>
+
+                        <!--                    <button name="action_view_invoice_checkout" type="object" class="oe_stat_button" icon="fa-pencil-square-o" invisible="invoice_count == 0">-->
+                        <!--                        <field name="checkout_invoice_count" widget="statinfo" string="Invoices"/>-->
+                        <!--                    </button>-->
+                    </div>
+                    <widget name="web_ribbon" title="Paid" invisible="not is_paid"/>
+                    <group>
+
+                        <field name="sequence_number"/>
+                        <field name="partner_id" required="1"/>
+                        <field name="phone_number"/>
+                        <field name="checkout_date"/>
+                        <field name="due_date"/>
+                        <field name="return_date"/>
+                        <field name="state"/>
+                        <field name="penalty"/>
+                        <!--                        <field name="user_id" required="1"/>-->
+                    </group>
+                    <notebook>
+                        <page string="Books">
+                            <field name="checkout_line_ids" readonly="state not in ['new']">
+                                <list editable="bottom">
+                                    <field name="book_id" required="1"/>
+                                    <field name="price"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    automatic sequence number-->
+    <record id="seq_library_checkout" model="ir.sequence">
+        <field name="name">Library checkout reference</field>
+        <field name="code">library.checkout</field>
+        <field name="prefix">CKOT</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!--    check out details for res_partner-->
+    <record id="view_library_checkout_line_list" model="ir.ui.view">
+        <field name="name">library.checkout.line.list</field>
+        <field name="model">library.checkout.line</field>
+        <field name="arch" type="xml">
+            <list create="0">
+                <field name="checkout_id"/>
+                <field name="book_id"/>
+                <field name="checkout_date"/>
+                <field name="due_date"/>
+                <field name="return_date"/>
+                <field name="is_late"/>
+                <field name="penalty"/>
+            </list>
+        </field>
+    </record>
+
+
+</odoo>

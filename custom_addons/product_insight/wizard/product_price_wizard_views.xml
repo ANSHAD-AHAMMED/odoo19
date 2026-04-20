@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_price_wizard_form" model="ir.ui.view">
+        <field name="name">product.price.wizard.form</field>
+        <field name="model">product.price.wizard</field>
+        <field name="arch" type="xml">
+
+            <form string="Product Wizard">
+
+                <group>
+                    <field name="new_price"/>
+                </group>
+                <group>
+                    <field name="same_price_product_ids"/>
+                </group>
+                <group>
+                    <field name="product_ids"/>
+<!--                    widget="many2many_tags"-->
+                </group>
+
+<!--                <group>-->
+<!--                    <field name="same_price_product_ids" widget="many2many_tags" readonly="1"/>-->
+<!--                </group>-->
+
+                <group>
+                    <field name="vendor_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+
+                <footer>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+
+
+                <!--                <footer>-->
+                <!--                    <button name="_compute_product_vendor_ids"-->
+                <!--                            type="object"-->
+                <!--                            string="_compute_product_vendor_ids"-->
+                <!--                            class="btn-primary"/>-->
+                <!--                    <button string="Close" special="cancel"/>-->
+
+                <!--                    <button name="action_apply"-->
+                <!--                            type="object"-->
+                <!--                            string="Apply"-->
+                <!--                            class="btn-primary"/>-->
+                <!--                    <button string="Close" special="cancel"/>-->
+                <!--                </footer>-->
+
+            </form>
+        </field>
+    </record>
+
+    <!--    action-->
+    <record id="action_product_price_wizard" model="ir.actions.act_window">
+        <field name="name">Product price</field>
+        <field name="res_model">product.price.wizard</field>
+        <field name="view_mode">form</field>
+        <!--        <field name="view_id" ref="mass_cancel_orders_view_form"/>-->
+        <field name="target">new</field>
+        <!--        <field name="binding_model_id" ref="model_sale_order"/>-->
+        <field name="binding_view_types">list,kanban</field>
+    </record>
+
+</odoo>

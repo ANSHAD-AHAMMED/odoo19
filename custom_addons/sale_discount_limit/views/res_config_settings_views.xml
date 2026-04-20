@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">
+            res.config.settings.view.form.inherit.sale_discount_limit.discount_limit
+        </field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pricing_setting_container']" position="inside">
+                <setting string="Discount Limit"
+                         help="discount limit in every month"
+                         id="discount_limit_setting">
+                    <field name="discount_limit" widget="monetary"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <!--    default genres-->
+        <record id="genre_fiction" model="library.genre">
+            <field name="name">Fiction</field>
+        </record>
+
+        <record id="genre_nonfiction" model="library.genre">
+            <field name="name">Non Fiction</field>
+        </record>
+
+        <record id="genre_triller" model="library.genre">
+            <field name="name">Triller</field>
+        </record>
+
+        <record id="genre_noval" model="library.genre">
+            <field name="name">Noval</field>
+        </record>
+</odoo>

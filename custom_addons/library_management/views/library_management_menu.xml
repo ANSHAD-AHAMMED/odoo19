@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_library_management_root" name="Library Managemnet"/>
+
+    <menuitem id="menu_library_book_management" parent="menu_library_management_root" name="Book Management"/>
+    <menuitem id="menu_books" parent="menu_library_book_management" name="Books"
+              action="action_books"/>
+    <menuitem id="menu_checkout" parent="menu_library_book_management" name="Checkout" action="action_checkout"/>
+
+
+    <menuitem id="menu_library_configurations" parent="menu_library_management_root" name="Configuration"/>
+
+    <menuitem id="menu_settings" parent="menu_library_configurations" name="Setting" action="action_library_settings"/>
+    <menuitem id="menu_author" parent="menu_library_configurations" name="Authors" action="action_author"/>
+    <menuitem id="menu_publisher" parent="menu_library_configurations" name="Publishers" action="action_publisher"/>
+    <menuitem id="menu_genre" parent="menu_library_configurations" name="Genre" action="action_genre"/>
+    <menuitem id="menu_tag" parent="menu_library_configurations" name="Tags" action="action_library_tag"/>
+
+
+    <menuitem id="menu_library_reporting" parent="menu_library_management_root" name="Reporting"/>
+
+    <menuitem id="menu_book_borrow_report" parent="menu_library_reporting" name="Book borrow report" action="action_library_report_wizard"/>
+
+</odoo>

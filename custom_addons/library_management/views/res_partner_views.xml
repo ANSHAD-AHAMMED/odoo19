@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="borrow_book_inherited_model_view_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.library.checkout</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <button name="action_late_return_details"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-undo">
+                    <field string="Late Return" name="late_count" widget="statinfo"/>
+                </button>
+
+                <button class="oe_stat_button"
+                        icon="fa-frown-o"
+                        clickable="0"
+                        type="object">
+                    <field string="Penalty" name="total_penalty" widget="statinfo"/>
+                </button>
+
+            </xpath>
+
+            <field name="category_id" position="after">
+                <field name="borrow_limit" groups="library_management.library_librarian_group"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="checkout_book_inherited_model_view_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.library.checkout.line</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <button name="action_checkout_details"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-book">
+                    <field string="Books" name="books" widget="statinfo"/>
+                </button>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
