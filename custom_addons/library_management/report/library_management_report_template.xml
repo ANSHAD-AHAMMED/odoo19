@@ -5,7 +5,7 @@
             <t t-call="web.external_layout">
                 <div class="page">
                     <h2 class="text-center mb-4">Library Management Report</h2>
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-sm">
                         <thead class="table-dark text-center">
                             <tr>
                                 <th>Reference ID</th>
@@ -14,7 +14,7 @@
                                 <th>Author</th>
                                 <th>Checkout Date</th>
                                 <th>Return Date</th>
-                                <th>Category</th>
+                                <th>Tag</th>
                                 <th>Genre</th>
                             </tr>
                         </thead>
@@ -22,28 +22,28 @@
                             <t t-foreach="lines" t-as="line">
                                 <tr>
                                     <td>
-                                        <t t-esc="line['reference_id']"/>
+                                        <t t-out="line['reference_id']"/>
                                     </td>
                                     <td>
-                                        <t t-esc="line['member_name']"/>
+                                        <t t-out="line['partner_id']"/>
                                     </td>
                                     <td>
-                                        <t t-esc="line['book_name']"/>
+                                        <t t-out="line['book_name']"/>
                                     </td>
                                     <td>
-                                        <t t-esc="line['author'] or ''"/>
+                                        <t t-out="line['author'] or ''"/>
                                     </td>
                                     <td>
-                                        <t t-esc="line['checkout_date']"/>
+                                        <t t-out="line['checkout_date']"/>
                                     </td>
                                     <td>
-                                        <t t-esc="line['return_date'] or ''"/>
+                                        <t t-out="line['return_date'] or ''"/>
                                     </td>
                                     <td>
-                                        <t t-esc="line['category'] or ''"/>
+                                        <t t-out="line['tag'] or ''"/>
                                     </td>
                                     <td>
-                                        <t t-esc="line['genre'] or ''"/>
+                                        <t t-out="line['genre'] or ''"/>
                                     </td>
                                 </tr>
                             </t>

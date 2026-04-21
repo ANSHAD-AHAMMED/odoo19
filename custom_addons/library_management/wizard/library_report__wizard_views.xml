@@ -17,11 +17,12 @@
                         <field name="checkout_date"/>
                         <field name="return_date"/>
                         <field name="sort_by"/>
+                        <field name="sort_order_by"/>
                     </group>
                 </group>
                 <footer>
                     <button name="add_report_action"
-                            string="Generate Report"
+                            string="Print"
                             type="object"
                             class="btn-primary"/>
                     <button string="Cancel"
