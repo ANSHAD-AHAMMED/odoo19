@@ -5,17 +5,49 @@
             <t t-call="web.external_layout">
                 <div class="page">
                     <h2 class="text-center mb-4">Library Management Report</h2>
+                    <t t-if="partner_name">
+                        <p class="mb-3">
+                            <strong>Member:</strong>
+                            <t t-out="partner_name"/>
+                        </p>
+                    </t>
+                    <t t-if="book_name">
+                        <p class="mb-3">
+                            <strong>Book:</strong>
+                            <t t-out="book_name"/>
+                        </p>
+                    </t>
+                    <t t-if="tag_name">
+                        <p class="mb-3">
+                            <strong>Tag:</strong>
+                            <t t-out="tag_name"/>
+                        </p>
+                    </t>
+                    <t t-if="genre_name">
+                        <p class="mb-3">
+                            <strong>Genre:</strong>
+                            <t t-out="genre_name"/>
+                        </p>
+                    </t>
                     <table class="table table-sm">
                         <thead class="table-dark text-center">
                             <tr>
                                 <th>Reference ID</th>
-                                <th>Name</th>
-                                <th>Book</th>
+                                <t t-if="not partner_name">
+                                    <th>Name</th>
+                                </t>
+                                <t t-if="not book_name">
+                                    <th>Book</th>
+                                </t>
                                 <th>Author</th>
                                 <th>Checkout Date</th>
                                 <th>Return Date</th>
-                                <th>Tag</th>
-                                <th>Genre</th>
+                                <t t-if="not tag_name">
+                                    <th>Tag</th>
+                                </t>
+                                <t t-if="not genre_name">
+                                    <th>Genre</th>
+                                </t>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,12 +56,16 @@
                                     <td>
                                         <t t-out="line['reference_id']"/>
                                     </td>
-                                    <td>
-                                        <t t-out="line['partner_id']"/>
-                                    </td>
-                                    <td>
-                                        <t t-out="line['book_name']"/>
-                                    </td>
+                                    <t t-if="not partner_name">
+                                        <td>
+                                            <t t-out="line['partner_id']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="not book_name">
+                                        <td>
+                                            <t t-out="line['book_name']"/>
+                                        </td>
+                                    </t>
                                     <td>
                                         <t t-out="line['author'] or ''"/>
                                     </td>
@@ -39,12 +75,16 @@
                                     <td>
                                         <t t-out="line['return_date'] or ''"/>
                                     </td>
-                                    <td>
-                                        <t t-out="line['tag'] or ''"/>
-                                    </td>
-                                    <td>
-                                        <t t-out="line['genre'] or ''"/>
-                                    </td>
+                                    <t t-if="not tag_name">
+                                        <td>
+                                            <t t-out="line['tag'] or ''"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="not genre_name">
+                                        <td>
+                                            <t t-out="line['genre'] or ''"/>
+                                        </td>
+                                    </t>
                                 </tr>
                             </t>
                             <t t-if="not lines">
