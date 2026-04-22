@@ -10,18 +10,23 @@
                     <group>
                         <field name="partner_id"/>
                         <field name="book_id"/>
-                        <field name="category_id"/>
+                        <field name="tag_id"/>
                         <field name="genre_id"/>
                     </group>
                     <group>
                         <field name="checkout_date"/>
                         <field name="return_date"/>
                         <field name="sort_by"/>
+                        <field name="sort_order_by"/>
                     </group>
                 </group>
                 <footer>
                     <button name="add_report_action"
-                            string="Generate Report"
+                            string="Print"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="add_xlsx_action"
+                            string="XLSX"
                             type="object"
                             class="btn-primary"/>
                     <button string="Cancel"

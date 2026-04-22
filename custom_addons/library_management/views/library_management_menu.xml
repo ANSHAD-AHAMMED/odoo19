@@ -19,6 +19,6 @@
 
     <menuitem id="menu_library_reporting" parent="menu_library_management_root" name="Reporting"/>
 
-    <menuitem id="menu_book_borrow_report" parent="menu_library_reporting" name="Book borrow report" action="action_library_report_wizard"/>
+    <menuitem id="menu_book_borrow_pdf_report" parent="menu_library_reporting" name="Book borrow report" action="action_library_report_wizard"/>
 
 </odoo>

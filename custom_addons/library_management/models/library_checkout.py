@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import io
+import json
+import xlsxwriter
 from odoo import api, fields, models, _, Command
 from datetime import timedelta, date
-
+from odoo.tools import json_default
 from odoo.exceptions import UserError
 
 
@@ -323,4 +326,9 @@ class LibraryCheckout(models.Model):
             'view_mode': 'form',
             'target': 'current',
         }
+
+    # def library_management_report_excel(self):
+    #     books = self.mapped('checkout_line_ids.book_id.name')
+    #     print(self)
+    #     print('books=',books)
     
