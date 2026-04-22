@@ -17,7 +17,7 @@ class LibraryReportWizard(models.TransientModel):
     genre_id = fields.Many2one('library.genre', string='Genre')
     sort_by = fields.Selection([
         ('lc.checkout_date', 'Checkout Date'),
-        ('lc.checkout_due_date', 'Due Date'),
+        ('lc.due_date', 'Due Date'),
     ], string='Sort By', default='lc.checkout_date')
 
     sort_order_by = fields.Selection([
@@ -109,51 +109,90 @@ class LibraryReportWizard(models.TransientModel):
         return self.env.ref(
             'library_management.action_library_report_print'
         ).report_action(self, data=data)
-    #===============================================================================
-    @api.onchange('tag_id')
-    def checkout_report_excel(self):
-        books = self.env['library.checkout.line']
-        print('books=', books)
+
+    def generate_xlsx_report(self, options, response):
+        """ Generate an xlsx report """
+        print('options=',options)
+        print('response=',response)
+        print('self=',self)
+        lines = self._fetch_report_data()
+
+        output = io.BytesIO() #?
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        sheet = workbook.add_worksheet('Library Report')
+
+        head = workbook.add_format({
+            'align': 'center',
+            'bold': True,
+            'font_size': 20
+        })
+        col_head = workbook.add_format({
+            'bold': True,
+            'align': 'center',
+            'font_size': 12,
+        })
+        cell_format = workbook.add_format({
+            'align': 'center',
+            'font_size': 12,
+        })
+
+        sheet.merge_range('A1:I1', 'Library Management Report', head)
+        sheet.set_row(0,30)
+
+        headers = [
+            'Reference ID', 'Member','Book Name', 'Author', 'Checkout Date', 'Return Date', 'Due date', 'Tag', 'Genre',
+        ]
+
+        col_width = [15, 18, 30, 14, 25, 18, 18, 18, 18]
+
+        for col,(headers,width) in enumerate(zip(headers, col_width)):
+            sheet.write(1, col, headers, col_head)
+            sheet.set_column(col, col, width)
+
+        for row_ids, record in enumerate(lines, start=2):
+            sheet.write(row_ids, 0, record.get('reference_id') or '', cell_format)
+            sheet.write(row_ids, 1, record.get('partner_id') or '', cell_format)
+            sheet.write(row_ids, 2, record.get('book_name') or '', cell_format)
+            sheet.write(row_ids, 3, record.get('author') or '', cell_format)
+
+            checkout = record.get('checkout_date')
+            return_d = record.get('return_date')
+            due_d = record.get('due_date')
+
+            sheet.write(row_ids, 4, str(checkout)[:10] if checkout else '', cell_format)
+            sheet.write(row_ids, 5, str(return_d)[:10] if return_d else '', cell_format)
+            sheet.write(row_ids, 6, str(due_d)[:10] if return_d else '', cell_format)
+
+            sheet.write(row_ids, 7, record.get('tag') or '', cell_format)
+            sheet.write(row_ids, 8, record.get('genre') or '', cell_format)
+
+        workbook.close()
+        output.seek(0)
+        response.stream.write(output.read())
+        output.close()
+
+    def add_xlsx_action(self):
+        """ XLSX actions js can trigger download """
         data = {
-            'model_id': self.id,
+            # 'model_id': self.id,
+            # 'wizard_vals':{
+            'partner_id': self.partner_id.id or False,
+            'checkout_date': self.checkout_date and str(self.checkout_date) or False,
+            'return_date': self.return_date and str(self.return_date) or False,
+            # 'due_date': self.due_date and str(self.due_date) or False,
+            'book_id': self.book_id.id or False,
+            'tag_id': self.tag_id.id or False,
+            'genre_id': self.genre_id.id or False,
+            'sort_by': self.sort_by or 'lc.checkout_date',
+            'sort_order_by': self.sort_order_by or 'ASC',
+            # }
         }
-        print('data=', data)
         return {
             'type': 'ir.actions.report',
             'data':{
                 'options': json.dumps(data, default=json_default),
                 'output_format': 'xlsx',
-                'report_name': 'Library Report Excel',
+                'report_name': 'Library Management Report',
             },
             'report_type': 'xlsx',
         }
-
-    def add_xlsx_action(self):
-        lines = self._fetch_report_data()
-        data = self.read()[0]
-        output = io.BytesIO()
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        sheet = workbook.add_worksheet()
-        cell_format = workbook.add_format({
-            'align': 'center',
-            'font_size': '12px',
-        })
-        head = workbook.add_format({
-            'align': 'center',
-            'bold': True,
-            'font_size': '20px'
-        })
-        txt = workbook.add_format({
-            'font_size': '10px',
-            'align': 'center'
-        })
-
-        sheet.merge_range('B2:I3', 'Library Management Report',head)
-        sheet.merge_range('A5:B5', 'books', cell_format)
-
-        for i, book in enumerate(lines): # ,start=5
-            sheet.merge_range(f'C{i}:D{i}', book, txt)
-            workbook.close()
-            output.seek(0)
-            response.stream.write(output.read())
-            output.close()

@@ -37,5 +37,11 @@
         'views/res_partner_views.xml',
         'report/library_management_report_template.xml',
         'views/library_management_menu.xml',
-    ]
+    ],
+
+    'assets': {
+        'web.assets_backend': [
+            'library_management/static/src/js/action_manager.js',
+        ],
+    },
 }
