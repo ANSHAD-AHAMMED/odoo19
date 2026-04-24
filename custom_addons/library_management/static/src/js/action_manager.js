@@ -3,7 +3,7 @@ import { registry } from "@web/core/registry";
 import { download } from "@web/core/network/download";
 
 registry.category("ir.actions.report handlers").add("xlsx", async(action)=> {
-  if (action.report_type === 'xlsx') {
+  if (action.report_type === 'excel') {
       await download({
           url: '/xlsx_reports',
           data: action.data,

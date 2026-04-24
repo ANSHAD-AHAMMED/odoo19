@@ -1,9 +1,11 @@
 # -- coding: utf-8 --
 import io
 import json
+
+from pydantic import color
+
 import xlsxwriter
-from odoo.tools import json_default
-from odoo import fields, models, api
+from odoo import fields, models
 
 class LibraryReportWizard(models.TransientModel):
     _name = 'library.report.wizard'
@@ -112,24 +114,35 @@ class LibraryReportWizard(models.TransientModel):
 
     def generate_xlsx_report(self, options, response):
         """ Generate an xlsx report """
-        print('options=',options)
-        print('response=',response)
-        print('self=',self)
         lines = self._fetch_report_data()
 
-        output = io.BytesIO() #?
+        output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet('Library Report')
 
         head = workbook.add_format({
             'align': 'center',
             'bold': True,
-            'font_size': 20
+            'font_size': 20,
+            'bg_color':'#3333ff',
+            'color': 'white',
+            'border': 2
         })
         col_head = workbook.add_format({
             'bold': True,
             'align': 'center',
             'font_size': 12,
+            'bg_color': '#6666ff',
+            'color': 'white',
+            'border': 1
+        })
+        filter = workbook.add_format({
+            'bold': True,
+            'align': 'center',
+            'font_size': 12,
+            'bg_color': '#944dff',
+            'color': 'white',
+            'border': 1
         })
         cell_format = workbook.add_format({
             'align': 'center',
@@ -139,32 +152,130 @@ class LibraryReportWizard(models.TransientModel):
         sheet.merge_range('A1:I1', 'Library Management Report', head)
         sheet.set_row(0,30)
 
-        headers = [
-            'Reference ID', 'Member','Book Name', 'Author', 'Checkout Date', 'Return Date', 'Due date', 'Tag', 'Genre',
-        ]
+        headers = ['Reference ID']
 
-        col_width = [15, 18, 30, 14, 25, 18, 18, 18, 18]
+        if not options['partner_id']:
+            headers.append('Member')
+
+        if not options['book_id']:
+            headers.append('Book')
+
+        headers.append('Author')
+        headers.append('Checkout Date')
+        headers.append('Return Date')
+        headers.append('Due Date')
+
+        if not options['tag_id']:
+            headers.append('Tag')
+
+        if not options['genre_id']:
+            headers.append('Genre')
+
+        col_width = [30, 30, 30, 30, 30, 30, 30, 30, 30]
+        start_table = 2
+        data = 0
+        row = 0
+        if options['partner_id']:
+            data += 1
+
+        if options['book_id']:
+            data += 1
+
+        if options['tag_id']:
+            data += 1
+
+        if options['genre_id']:
+            data += 1
 
         for col,(headers,width) in enumerate(zip(headers, col_width)):
-            sheet.write(1, col, headers, col_head)
+
+            if data > 0:
+                print('data=', data)
+                for i in range(data):
+                    print("hi")
+                    if options['partner_id']:
+                        print("first if")
+                        row += 1
+                        sheet.write(row, 0, "Partner",filter)
+                        sheet.write(row, 1, self.partner_id.name, filter)
+
+                    if options['book_id']:
+                        row += 1
+                        sheet.write(row, 0, "Book", filter)
+                        sheet.write(row, 1, self.book_id.name, filter)
+
+                    if options['tag_id']:
+                        row += 1
+                        sheet.write(row, 0, "Tag",filter)
+                        sheet.write(row, 1, self.tag_id.name, filter)
+
+                    if options['genre_id']:
+                        row += 1
+                        sheet.write(row, 0, "Genre", filter)
+                        sheet.write(row, 1, self.genre_id.name, filter)
+
+                    data = 0
+                    start_table = row + 2
+                    break
+
+            # row += 2
+            sheet.write(start_table, col, headers, col_head)
             sheet.set_column(col, col, width)
 
-        for row_ids, record in enumerate(lines, start=2):
-            sheet.write(row_ids, 0, record.get('reference_id') or '', cell_format)
-            sheet.write(row_ids, 1, record.get('partner_id') or '', cell_format)
-            sheet.write(row_ids, 2, record.get('book_name') or '', cell_format)
-            sheet.write(row_ids, 3, record.get('author') or '', cell_format)
+
+        start_table += 1
+
+        # row_ids = start_table
+        for row_ids, record in enumerate(lines, start = start_table):
+            column = 0
+
+
+            sheet.write(row_ids, column, record.get('reference_id') or '', cell_format)
+
+            if not options['partner_id']:
+                print("partner id=",record.get('partner_id'))
+                column += 1
+                sheet.write(row_ids, column, record.get('partner_id') or '', cell_format)
+
+            if not options['book_id']:
+                print("book name=",record.get('book_name'))
+                column += 1
+                sheet.write(row_ids, column, record.get('book_name') or '', cell_format)
+
+            column += 1
+            print('author')
+            sheet.write(row_ids, column, record.get('author') or '', cell_format)
+
 
             checkout = record.get('checkout_date')
             return_d = record.get('return_date')
             due_d = record.get('due_date')
 
-            sheet.write(row_ids, 4, str(checkout)[:10] if checkout else '', cell_format)
-            sheet.write(row_ids, 5, str(return_d)[:10] if return_d else '', cell_format)
-            sheet.write(row_ids, 6, str(due_d)[:10] if return_d else '', cell_format)
+            if not options['checkout_date']:
+                print('checkout date')
+                column += 1
+                sheet.write(row_ids, column, str(checkout)[:10] if checkout else '', cell_format)
 
-            sheet.write(row_ids, 7, record.get('tag') or '', cell_format)
-            sheet.write(row_ids, 8, record.get('genre') or '', cell_format)
+            if not options['return_date']:
+                print('return date')
+                column += 1
+                sheet.write(row_ids, column, str(return_d)[:10] if return_d else '', cell_format)
+
+            column += 1
+            print('due_date')
+            sheet.write(row_ids, column, str(due_d)[:10] if due_d else '', cell_format)
+
+            if not options['tag_id']:
+                print('tag id')
+                column += 1
+                sheet.write(row_ids, column, record.get('tag') or '', cell_format)
+
+            if not options['genre_id']:
+                print('genre id')
+                column += 1
+                sheet.write(row_ids, column, record.get('genre') or '', cell_format)
+
+            print('===================================================================')
 
         workbook.close()
         output.seek(0)
@@ -172,27 +283,23 @@ class LibraryReportWizard(models.TransientModel):
         output.close()
 
     def add_xlsx_action(self):
-        """ XLSX actions js can trigger download """
+        """ XLSX actions send data to js """
         data = {
-            # 'model_id': self.id,
-            # 'wizard_vals':{
             'partner_id': self.partner_id.id or False,
-            'checkout_date': self.checkout_date and str(self.checkout_date) or False,
-            'return_date': self.return_date and str(self.return_date) or False,
-            # 'due_date': self.due_date and str(self.due_date) or False,
+            'checkout_date': self.checkout_date or False,
+            'return_date': self.return_date or False,
             'book_id': self.book_id.id or False,
             'tag_id': self.tag_id.id or False,
             'genre_id': self.genre_id.id or False,
             'sort_by': self.sort_by or 'lc.checkout_date',
             'sort_order_by': self.sort_order_by or 'ASC',
-            # }
         }
         return {
             'type': 'ir.actions.report',
             'data':{
-                'options': json.dumps(data, default=json_default),
+                'options': json.dumps(data),
                 'output_format': 'xlsx',
                 'report_name': 'Library Management Report',
             },
-            'report_type': 'xlsx',
+            'report_type': 'excel',
         }
