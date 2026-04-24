@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="bulk_product_inherited_sales_model_view_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <!--                <page string="products">-->
+                <button id="add_to_order_line"
+                        name="add_to_order_line"
+                        string="product"
+                        type="object"
+                        class="btn-primary"
+                />
+                <!--                </page>-->
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="products">
+                    <!--                    <field name="order_line_ids">-->
+                    <!--                        <list>-->
+                    <!--                            <field name="name"/>-->
+                    <!--                            <field name="product_uom_qty"/>-->
+                    <!--                        </list>-->
+                    <!--                    </field>-->
+                    <!--                    <xpath expr="//notebook" position="inside">-->
+
+                    <!--                    </xpath>-->
+                    <field name="bulk_product_ids" string="product">
+                        <list>
+                            <field name="product_id" string="product"/>
+                            <field name="product_uom_qty" string="Quantity"/>
+                        </list>
+                    </field>
+
+                    <!--                    <field name="product_ids"/>-->
+                    <!--                    <field name="product_uom_qty"/>-->
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
