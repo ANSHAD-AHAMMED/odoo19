@@ -6,18 +6,17 @@ from odoo.http import content_disposition, request
 from odoo.tools import html_escape
 
 class XLSXReportController(http.Controller):
-    @http.route('/xlsx_reports', type='http', auth='user', csrf=False)
-
-    def xlsx_reports(self, options, output_format, report_name, **kwargs):
+    @http.route('/xlsx_reports', type='http', auth='user')
+    def xlsx_reports(self, options, output_format, report_name):
         """ Return data to python file passed from the js """
         # session_unique_id = request.session.uid
         # report_object = request.env['library.checkout'].with_user(session_unique_id)
-        options = json.loads(options)
+        options = json.loads(options) #convert json string into python object
         try:
             if output_format == 'xlsx':
                 response = request.make_response(
                     None,
-                    headers=[('Content-Type', 'application/vnd.ms-excel'),
+                    headers=[('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'),
                              ('Content-Disposition',
                               content_disposition(f"{report_name}.xlsx")
                     )]
@@ -36,7 +35,6 @@ class XLSXReportController(http.Controller):
                     'sort_order_by': options.get('sort_order_by') or 'ASC',
                 })
                 wizard.generate_xlsx_report(options,response)
-                response.set_cookie('fileToken',kwargs.get('token','token'))
                 return response
         except Exception as e:
             error = {
