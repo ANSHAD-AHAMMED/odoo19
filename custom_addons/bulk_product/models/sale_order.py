@@ -1,42 +1,45 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models,Command
-from odoo.cli import command
+from odoo import fields, models,Command
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    bulk_product_ids = fields.Many2many('bulk.product', string="Products")
-    # product_ids = fields.Many2many('product.product', string="Products")
-    # order_line_ids = fields.Many2many('sale.order.line', string="Order Lines")
-
-    # product = fields.Char(string="Products")
-    # product_uom_qty = fields.Float(string="Quantity")
+    bulk_product_ids = fields.One2many('bulk.product','sale_order_id', string="Products")
+    # product_id = fields.Many2one(
+    #     string="Product Template",
+    #     comodel_name='product.template',
+    #     # compute='_compute_product_template_id',
+    #     readonly=False,
+    #     # search='_search_product_template_id',
+    #     # domain=lambda self: self.env['sale.order.line']._fields['product_id']._description_domain(self.env),
+    # )
+    # product_uom_qty = fields.Float(
+    #     string="Quantity",
+    #     # compute='_compute_product_uom_qty',
+    #     digits='Product Unit', default=1.0,
+    #     # store=True, readonly=False, required=True, precompute=True
+    # )
 
     def add_to_order_line(self):
+        """ Add product to order line """
         for record in self:
-            products = record.bulk_product_ids
-            print('products=',products)
+            for bulk in record.bulk_product_ids:
+                if bulk.product_uom_qty <= 0:
+                    raise UserError("All products must have at least one quantity")
 
-            if products:
-                existing_product_ids = record.bulk_product_ids.mapped('product_id.id')
-                print('existing_product_ids=',existing_product_ids)
-                new_lines = self.env['sale.order.line'].mapped('product_id')
+                product = bulk.product_id
+                print('product=',product)
+                existing_line = record.order_line.filtered(lambda l: l.product_id.id == product.id)
 
-                for product in products:
-                    if product.id not in existing_product_ids:
-                        new_line = self.env['sale.order.line'].new({
-                            # 'order_id': order.id,
-                            'product_id': product.product_id.id,
-                            'product_uom_qty': product.product_uom_qty,
-                            # 'is_associate': True,
-                        })
+                if existing_line:
+                    existing_line.product_uom_qty += bulk.product_uom_qty
 
-                        new_lines |= new_line
-                    record.order_line |= new_lines
-                    self.write({'bulk_product_ids': [Command.clear()]})
-
-            # else:
-            #     record.order_line = record.order_line.filtered(
-            #         lambda l: l.product_id.id not in associated_product_ids
-            #     )
+                else:
+                    self.env['sale.order.line'].create({
+                        'order_id': record.id,
+                        'product_id': product.id,
+                        'product_uom_qty': bulk.product_uom_qty,
+                    })
+                record.write({'bulk_product_ids': [Command.clear()]})

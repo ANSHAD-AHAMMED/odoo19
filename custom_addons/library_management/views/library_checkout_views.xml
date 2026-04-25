@@ -49,10 +49,6 @@
                     <field name="state" widget="statusbar"
                            status_visible="new,check_out,over_due,returned,cancel"/>
                 </header>
-                <!--                                THIS IS A SALES WARNING LIKE FEATURE-->
-                <!--                                <div class="alert alert-warning" role="alert" invisible="not late_return_warning_text">-->
-                <!--                                    <field name="late_return_warning_text" class="fw-bold"/>-->
-                <!--                                </div>-->
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_view_invoice_checkout"
@@ -63,10 +59,6 @@
 
                             <field name="invoice_amount" widget="statinfo" string="Invoiced"/>
                         </button>
-
-                        <!--                    <button name="action_view_invoice_checkout" type="object" class="oe_stat_button" icon="fa-pencil-square-o" invisible="invoice_count == 0">-->
-                        <!--                        <field name="checkout_invoice_count" widget="statinfo" string="Invoices"/>-->
-                        <!--                    </button>-->
                     </div>
                     <widget name="web_ribbon" title="Paid" invisible="not is_paid"/>
                     <group>
@@ -79,7 +71,6 @@
                         <field name="return_date"/>
                         <field name="state"/>
                         <field name="penalty"/>
-                        <!--                        <field name="user_id" required="1"/>-->
                     </group>
                     <notebook>
                         <page string="Books">
