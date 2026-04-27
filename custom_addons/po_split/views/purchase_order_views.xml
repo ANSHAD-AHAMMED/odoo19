@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form_split_vendor" model="ir.ui.view">
+        <field name="name">purchase.order.form.split.vendor</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart button: shows count of split POs on the original -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_split_orders"
+                    icon="fa-code-fork"
+                    invisible="split_order_count == 0"
+                >
+                    <field name="split_order_count" widget="statinfo" string="Split Orders"/>
+                </button>
+            </xpath>
+
+            <!-- Back-link button on split child POs -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_original_order"
+                    icon="fa-arrow-left"
+                    invisible="not is_split_order"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Original PO</span>
+                    </div>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
