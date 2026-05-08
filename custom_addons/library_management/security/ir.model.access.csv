@@ -17,3 +17,5 @@ access_library_checkout_line_librarian,access.library.checkout.line,model_librar
 access_library_tag_librarian,access.library.tag,model_library_tag,library_management.library_librarian_group,1,1,1,1
 access_suggestion_wizard_librarian,access.suggestion.wizard,model_suggestion_wizard,library_management.library_librarian_group,1,1,1,1
 access_library_report_wizard,access.library.report.wizard,model_library_report_wizard,library_management.library_librarian_group,1,1,1,1
+access_library_book_image,access.library.book.image,model_library_book_image,library_management.library_librarian_group,1,1,1,1
+access_library_book_condition,access.library.book.condition,model_library_book_condition,library_management.library_librarian_group,1,1,1,1

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Book Donation Donate Form Template -->
+        <template id="book_donation_form_template" name="Book Donation Form">
+            <t t-call="website.layout">
+                <section class="d-flex align-items-center justify-content-center vh-100"
+                         style="background-color: #f8f9fa;">
+                    <div class="card shadow-lg rounded-4" style="width: 400px;">
+                        <div class="card-body p-5">
+                            <h3 class="text-center mb-4">Donate Book</h3>
+                            <form action="/website/book/create" method="post" enctype="multipart/form-data">
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Book Name</label>
+                                    <input type="text" name="name" class="form-control rounded-2 " required=""
+                                           data-fill-with="name"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Author</label>
+                                    <input type="text" name="author_id" class="form-control rounded-2"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">ISBN</label>
+                                    <input type="text" name="isbn" class="form-control rounded-2" required=""
+                                           data-fill-with="isbn"/>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-semibold">Select genre</label>
+                                    <select name="genre_id" id="genre_id" class="form-control">
+                                        <option value="">Choose...</option>
+                                        <t t-foreach="request.env['library.genre'].search([])" t-as="genre">
+                                            <option t-att-value="genre.id">
+                                                <t t-esc="genre.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-semibold">Select Condition</label>
+                                    <select name="condition" id="condition" class="form-control">
+                                        <option value="new">New</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="old">Old</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Cover Image</label>
+                                    <input type="file" multiple="multiple" name="cover_image"/>
+                                </div>
+
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-block rounded-3 py-2">
+                                        Submit
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </t>
+        </template>
+
+        <!-- Website Menu Record -->
+        <record id="menu_book_donation_form" model="website.menu">
+            <field name="name">Donate Book</field>
+            <field name="url">/website/book/form</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">90</field>
+        </record>
+    </data>
+</odoo>

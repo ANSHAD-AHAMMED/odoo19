@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    card view-->
+    <template id="portal_my_home_menu_book_donation" name="Book Donation" inherit_id="portal.portal_my_home"
+              customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/customer_portal_custom/static/src/image/fleet_image.jpg'"/>
+                <t t-set="title">Book Donation</t>
+                <t t-set="url" t-value="'/book_donation'"/>
+                <t t-set="text">View Donated books</t>
+                <t t-set="placeholder_count" t-value="'portal_donation'"/>
+            </t>
+        </div>
+    </template>
+
+    
+    <template id="portal_my_home_book_donation_views" name="My Book Donation">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Book Donation</t>
+            </t>
+            <t t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th class="text-left">Book Name</th>
+                        <th class="text-center">Author</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-end">Cost</th>
+                    </tr>
+                </thead>
+                <t t-foreach="user_donations" t-as="record">
+                    <tr>
+
+                        <td class='text-left'>
+                            <a t-attf-href="/my/books/{{record.id}}" t-att-title="record.name">
+                                <span t-field="record.name"/>
+                            </a>
+                        </td>
+
+                        <td class='text-center'>
+                            <span t-field="record.author_id.name"/>
+                        </td>
+                        <td class='text-center'>
+                            <span t-field="record.price"/>
+                        </td>
+                        <td class='text-end'>
+                            <span t-field="record.cost"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
