@@ -35,7 +35,8 @@
         <field name="name">library.book.list</field>
         <field name="model">library.book</field>
         <field name="arch" type="xml">
-            <list decoration-success="status in ['available']" decoration-danger="status in ['unavailable']" decoration-warning="status in ['coming_soon']">
+            <list decoration-success="status in ['available']" decoration-danger="status in ['unavailable']"
+                  decoration-warning="status in ['coming_soon']">
                 <field name="id"/>
                 <field name="name"/>
                 <field name="cover_image"/>
@@ -72,6 +73,7 @@
                             <field name="price"/>
                             <field name="cost"/>
                             <field name="publish_date"/>
+                            <field name="condition"/>
                         </group>
                         <group>
                             <field name="tag_ids" widget="many2many_tags"/>
@@ -81,6 +83,18 @@
                             <field name="status"/>
                         </group>
                     </group>
+
+                    <!--                    <notebook>-->
+                    <!--                        <page string="Books Images">-->
+                    <!--                            <field name="book_image_ids">-->
+                    <!--                                &lt;!&ndash;                                readonly="state not in ['new']&ndash;&gt;-->
+                    <!--                                <list editable="bottom">-->
+                    <!--                                    <field name="book_image" required="1" widget="image" class="oe_avatar"/>-->
+                    <!--                                    &lt;!&ndash;                                    <field name="price"/>&ndash;&gt;-->
+                    <!--                                </list>-->
+                    <!--                            </field>-->
+                    <!--                        </page>-->
+                    <!--                    </notebook>-->
                 </sheet>
             </form>
         </field>

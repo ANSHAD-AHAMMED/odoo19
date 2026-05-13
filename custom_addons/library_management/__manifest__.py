@@ -16,6 +16,8 @@
         'mail',
         'product',
         'account',
+        'website',
+        'website_sale',
     ],
 
     'data': [
@@ -24,6 +26,7 @@
         'wizard/library_report__wizard_views.xml',
         'wizard/suggestion_wizard_views.xml',
         'data/library_genre_data.xml',
+        'data/library_book_condition.xml',
         'data/due_date_reminder_template_data.xml',
         'data/over_due_reminder_template_data.xml',
         'data/ir_cron_data.xml',
@@ -36,6 +39,10 @@
         'views/library_settings_views.xml',
         'views/res_partner_views.xml',
         'report/library_management_report_template.xml',
+        'views/donation_form_template.xml',
+        'views/view_book_template.xml',
+        'views/library_management_portal_template.xml',
+        'views/snippets/trending_product_template.xml',
         'views/library_management_menu.xml',
     ],
 
@@ -43,5 +50,9 @@
         'web.assets_backend': [
             'library_management/static/src/js/action_manager.js',
         ],
+        'web.assets_frontend': [
+            'library_management/static/src/js/trending_book.js',
+            'library_management/static/src/xml/trending_book.xml',
+        ]
     },
 }

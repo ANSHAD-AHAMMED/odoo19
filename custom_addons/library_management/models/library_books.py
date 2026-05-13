@@ -10,6 +10,7 @@ class LibraryBook(models.Model):
     publisher_id = fields.Many2one('library.publisher', string="Publisher")
     genre_id = fields.Many2one('library.genre', string="Genre")
     product_id = fields.Many2one('product.product', string='Product')
+    condition_id = fields.Many2one('library.book.condition', string="Condition")
 
     checkout_ids = fields.One2many('library.checkout', 'book_id')
     tag_ids = fields.Many2many('library.tag', string="Tags")
@@ -27,12 +28,26 @@ class LibraryBook(models.Model):
 
     publish_date = fields.Datetime(string="Publish Date")
 
+    book_image_ids = fields.Many2many(
+        comodel_name="library.book.image",
+        string="Book Image",
+    )
+
     status = fields.Selection(
         string="Status",
         selection=[
             ('coming_soon', 'Coming Soon'),
             ('available', 'Available'),
             ('unavailable', 'Unavailable')
+        ],
+    )
+
+    condition = fields.Selection(
+        string="Condition",
+        selection=[
+            ('new', 'New'),
+            ('medium', 'Medium'),
+            ('old', 'Old')
         ],
     )
 

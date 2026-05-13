@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_book_donation_form_views" name="My Book Form Donation">
+        <t t-call="portal.portal_layout">
+
+            <div class="row">
+                <t t-foreach="view_book" t-as="book">
+                    <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <span t-field="book.cover_image"
+                                          t-options='{"widget": "image", "class": "oe_avatar", "style": "width:250px; height:200px;"}'
+                                    />
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Book Name:</label>
+                                    <span t-field="book.name"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">ISBN:</label>
+                                    <span t-field="book.isbn"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Book Condition:</label>
+                                    <span t-field="book.condition"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Author Name:</label>
+                                    <span t-field="book.author_id"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Genre Name:</label>
+                                    <span t-field="book.genre_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </t>
+            </div>
+
+        </t>
+
+    </template>
+</odoo>

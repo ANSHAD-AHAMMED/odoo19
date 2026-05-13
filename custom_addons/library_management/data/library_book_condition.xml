@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <!--    default conditions   -->
+        <record id="condition_good" model="library.book.condition">
+            <field name="name">Good</field>
+        </record>
+
+        <record id="condition_medium" model="library.book.condition">
+            <field name="name">Medium</field>
+        </record>
+
+        <record id="condition_old" model="library.book.condition">
+            <field name="name">Old</field>
+        </record>
+</odoo>
