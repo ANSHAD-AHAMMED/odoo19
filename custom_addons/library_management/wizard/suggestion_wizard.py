@@ -49,7 +49,3 @@ class SuggestionWizard(models.TransientModel):
         checkout.write({
             'checkout_line_ids': lines
         })
-
-"""
-now it will show a wizard and we can filter from there and we can generate report from there, when we click generate report it will make report and it direct to a new page. and from there we can see a print button and awe can print from ther as pdf. but i dont wnat it like that. i want pdf report when i click the generate report(it not need to direct to a page, directly create pdf report)
-"""

@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--Product Category tab content template-->
-<templates xml:space="preserve">
-   <t t-name="library_management.category_data">
-       <section class="categories_section">
-           <div class="container">
-               <h3 class="section_heading">Trending Books</h3>
-               <div class="categories_wrapper">
-                   <t t-foreach="result.categories" t-as="category" t-key="category.id">
-                       <div class="categories">
-                           <div class="img_wrapper">
-                               <t t-if="category.cover_image">
-                                   <img t-att-src="'data:image/png;base64,' + category.cover_image"
-                                        class="img img-fluid rotate-center"
-                                        t-att-alt="category.name or 'Category Image'"
-                                        loading="lazy"/>
-                               </t>
-                               <t t-else="">
-                                   <img src="/library_management/static/src/img/image1.jpg"
-                                        class="img img-fluid rotate-center"
-                                        alt="Default Category Image"
-                                        loading="lazy"/>
-                               </t>
-                           </div>
-                           <div class="type" style="font-weight: 700; font-size: 20px;">
-                               <t t-esc="category.name"/>
-                           </div>
-                       </div>
-                   </t>
-               </div>
-           </div>
-       </section>
-   </t>
+<templates id="template" xml:space="preserve">
+	<t t-name="library_management.category_data">
+        <section class="categories_section">
+			<div t-attf-id="{{ dynamic_id }}" class="container carousel slide" data-bs-ride="carousel"
+                 t-att-data-bs-interval="interval">
+				<div class="carousel-inner row w-100 mx-auto" role="listbox">
+                    <t t-foreach="chunks" t-as="chunk" t-key="chunk_index">
+						<div t-att-class="chunk.is_active ? 'carousel-item active' : 'carousel-item'">
+							<div class="row p-5">
+                                <t t-foreach="chunk" t-as="category" t-key="category.id">
+                                    <div class="block span3 col-3">
+										<div class="card-group">
+											<div class="card">
+                                                <img class="card-img-top"
+                                                     t-attf-src="data:image/png;base64,{{category.cover_image}}"
+                                                     style="padding: 0px; margin: 0px; height: 160px; width:305px;"/>
+                                                <h5 class="mb-0"><t t-esc="category.name"/></h5>
+												<p class="mb-0"><t t-esc="dynamic_id"/></p>
+                                                <a t-attf-href="/slides/{{category.id}}"
+														class="btn btn-primary" t-att-title="category.name">
+														See Book details
+												</a>
+											</div>
+										</div>
+									</div>
+								</t>
+							</div>
+						</div>
+					</t>
+				</div>
+			</div>
+
+            <a t-attf-href="##{ dynamic_id }" class="carousel-control-prev" data-bs-slide="prev" role="button"
+               aria-label="Previous" title="Previous">
+				<span class="fa fa-chevron-circle-left fa-2x" style="color: gray"/>
+			</a>
+
+            <a t-attf-href="##{ dynamic_id }" class="carousel-control-next" data-bs-slide="next" role="button"
+               aria-label="Next" title="Next">##{ dynamic_id }
+				<span class="fa fa-chevron-circle-right fa-2x" style="color: gray"/>
+			</a>
+		</section>
+	</t>
 </templates>
