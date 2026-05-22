@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--privilege-->
+    <record model="res.groups.privilege" id="res_groups_privilege_sales">
+        <field name="name">Sales</field>
+    </record>
+
+    <!--    Commission Preparation group-->
+    <record id="commission_preparation_group" model="res.groups">
+        <field name="name">Commission Preparation</field>
+        <field name="privilege_id" ref="res_groups_privilege_sales"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--    Commission Approval group-->
+    <record id="commission_approval_group" model="res.groups">
+        <field name="name">Commission Approval</field>
+        <field name="privilege_id" ref="res_groups_privilege_sales"/>
+        <field name="implied_ids" eval="[(4, ref('commission_preparation_group'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="hr_employee_view_form_inherit_start_date" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.start.date</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <widget name="web_ribbon" title="Anniversary" invisible="not anniversary"/>
+                </xpath>
+
+                <xpath expr="//h5/field[@name='category_ids']" position="after">
+                    <group>
+                        <field name="emp_experience"/>
+                        <field name="experience_year">Experience:</field>
+                    </group>
+
+                </xpath>
+
+                <xpath expr="//group[@name='managers']" position="inside">
+                    <field name="date_start"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

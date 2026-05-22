@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--privilege-->
+    <record model="res.groups.privilege" id="res_groups_privilege_sales">
+        <field name="name">Sales</field>
+    </record>
+
+    <!--    price_update_restriction_group-->
+    <record id="price_update_restriction_group" model="res.groups">
+        <field name="name">price update restriction</field>
+        <field name="privilege_id" ref="res_groups_privilege_sales"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+</odoo>

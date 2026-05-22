@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="email_template_over_expense_reminder" model="mail.template">
+        <field name="name">Project over expense Reminder</field>
+        <field name="model_id" ref="time_sheet_budget_tracking.model_project_project"/>
+        <field name="subject">Project Over Expense Reminder</field>
+<!--        <field name="email_from">{{ object.company_id.email_formatted }}</field>-->
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Hello,</p>
+                <p>Your project budget spending is very high.</p>\
+            </div>
+        </field>
+    </record>
+</odoo>

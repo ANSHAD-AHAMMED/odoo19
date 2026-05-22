@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_commission_inherited_sales_model_view_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button id="commission_preparation"
+                        name="commission_preparation"
+                        string="Commission Preparation"
+                        type="object"
+                        class="btn-primary"
+                        groups="commission.commission_preparation_group"
+                />
+
+                <button id="commission_approval"
+                        name="commission_approval"
+                        string="Commission Approval"
+                        type="object"
+                        class="btn-primary"
+                        groups="commission.commission_approval_group"
+                />
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Commission">
+                    <field name="commission_line_ids">
+<!--                         -->
+                        <list editable="bottom">
+                            <field name="product_id" string="product Name"/>
+                            <field name="sales_person_id" string="Name"/>
+                            <field name="product_price" string="Amount"/>
+                            <field name="commission_percentage" string="Commission Pecentage"/>
+                            <field name="commission_percentage_amount" string="Commission Amount"/>
+                        </list>
+                    </field>
+                    <group>
+                        <field name="preparer_id">Preparer:</field>
+                        <field name="approver_id">Approver:</field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

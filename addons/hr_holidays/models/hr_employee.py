@@ -48,12 +48,6 @@ class HrEmployee(models.Model):
     def _compute_current_leave(self):
         self.current_leave_id = False
 
-        holidays = self.env['hr.leave'].sudo().search([
-            ('employee_id', 'in', self.ids),
-            ('date_from', '<=', fields.Datetime.now()),
-            ('date_to', '>=', fields.Datetime.now()),
-            ('state', '=', 'validate'),
-        ])
         for holiday in holidays:
             employee = self.filtered(lambda e: e.id == holiday.employee_id.id)
             employee.current_leave_id = holiday.holiday_status_id.id

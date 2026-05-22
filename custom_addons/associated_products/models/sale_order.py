@@ -33,10 +33,3 @@ class SaleOrder(models.Model):
                         print('new_lines=', new_lines)
                 order.order_line |= new_lines
                 print('order.order_line=', order.order_line)
-
-            # else:
-            #     order.order_line = order.order_line.filtered(
-            #         lambda l: l.product_id.id not in associated_product_ids
-            #     )
-            #     print('else:')
-            #     print('order.order_line=', order.order_line)

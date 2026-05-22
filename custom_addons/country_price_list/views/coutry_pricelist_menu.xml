@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="create_order_action" model="ir.actions.act_window">
+       <field name="name">Create Order Menu</field>
+       <field name="res_model">country.pricelist</field>
+       <field name="view_mode">form</field>
+       <field name="target">new</field>
+   </record>
+   <menuitem id="create_country_pricelist_menu" name="Country pricelist"
+             parent="sale.sale_order_menu" action="country_price_list.action_country_price_list"/>
+</odoo>

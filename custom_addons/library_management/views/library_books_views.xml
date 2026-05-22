@@ -84,17 +84,6 @@
                         </group>
                     </group>
 
-                    <!--                    <notebook>-->
-                    <!--                        <page string="Books Images">-->
-                    <!--                            <field name="book_image_ids">-->
-                    <!--                                &lt;!&ndash;                                readonly="state not in ['new']&ndash;&gt;-->
-                    <!--                                <list editable="bottom">-->
-                    <!--                                    <field name="book_image" required="1" widget="image" class="oe_avatar"/>-->
-                    <!--                                    &lt;!&ndash;                                    <field name="price"/>&ndash;&gt;-->
-                    <!--                                </list>-->
-                    <!--                            </field>-->
-                    <!--                        </page>-->
-                    <!--                    </notebook>-->
                 </sheet>
             </form>
         </field>
