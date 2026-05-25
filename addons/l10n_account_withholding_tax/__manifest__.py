@@ -11,7 +11,7 @@
         'views/account_payment_views.xml',
         'views/account_tax_views.xml',
         'views/report_payment_receipt_templates.xml',
-        'views/res_config_settings_views.xml',
+        'views/res_config_settings.xml',
 
         'wizards/account_payment_register_views.xml',
     ],
