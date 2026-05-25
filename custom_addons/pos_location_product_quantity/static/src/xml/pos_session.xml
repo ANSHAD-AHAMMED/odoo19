@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_location_product_quantity.ProductCard" t-inherit="point_of_sale.ProductCard"
+       t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-content')]" position="after">
+            <div class="col p-1">
+                <t t-if="props.product.product_location">
+                    <span>Location: <t t-esc="props.product.product_location"></t></span>
+                    <br/>
+                    <span>Qty: <t t-out="props.product.product_location_qty"></t></span>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>
