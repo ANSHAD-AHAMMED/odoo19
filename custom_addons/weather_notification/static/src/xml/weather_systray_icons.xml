@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="weather_notification.systray_icon">
+        <div class="position-relative">
+            <div class="p-3"
+                 t-on-click="showWeatherDate">
+                <i class="fa fa-cloud" style="color: white; font-size: 18px;"/>
+            </div>
+
+            <div t-if="state.open"
+                 class="position-absolute bg-white p-3"
+                 style="width: 300px; top: 100%; z-index: 1000;">
+                <div>
+                    <div t-if="state.lat_lon">
+                        <h3>latitude:<t t-esc="state.latitude"/></h3>
+                        <h3>longitude:<t t-esc="state.longitude"/></h3>
+                    </div>
+
+                    <div t-else="">
+                        <h1><t t-esc="state.location"/></h1>
+                    </div>
+                </div>
+
+                <p>Date: <strong><t t-esc="state.date"/></strong></p>
+
+                <p>Sky: <strong><t t-esc="state.condition"/></strong></p>
+
+                <p>Temp: <strong><t t-esc="state.temp"/>°C</strong></p>
+
+                <p>Last update: <strong><t t-esc="state.last_updated"/> </strong></p>
+            </div>
+        </div>
+    </t>
+</templates>

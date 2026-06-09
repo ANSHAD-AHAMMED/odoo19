@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_quick_task_root" name="Quick task"/>
+
+    <menuitem id="menu_quick_task" parent="menu_quick_task_root" name="Fleet service Order"/>
+
+    <menuitem id="menu_fleet_service_order" parent="menu_quick_task" name="Fleet service Order"
+              action="action_fleet_service_order"/>
+</odoo>

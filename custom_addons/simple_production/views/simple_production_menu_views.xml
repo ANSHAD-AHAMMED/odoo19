@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="create_order_action" model="ir.actions.act_window">
+       <field name="name">Create Order Menu</field>
+       <field name="res_model">simple.production</field>
+       <field name="view_mode">form</field>
+       <field name="target">new</field>
+   </record>
+   <menuitem id="create_simple_product_menu" name="Simple Product"
+             parent="stock.menu_product_in_config_stock" action="simple_production.action_simple_production"/>
+
+    <menuitem id="create_simple_product_bom_menu" name="Simple Product BOM"
+             parent="stock.menu_product_in_config_stock" action="simple_production.action_simple_production_bom"/>
+</odoo>

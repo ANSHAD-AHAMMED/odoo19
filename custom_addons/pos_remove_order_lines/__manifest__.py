@@ -8,7 +8,6 @@
         'point_of_sale',
     ],
     'data': [
-        # 'views/product_template_views.xml',
     ],
     'installable': True,
     'auto_install': True,
@@ -16,7 +15,10 @@
     'assets': {
 
         'point_of_sale._assets_pos': [
-            'pos_remove_order_lines/static/src/**/*',
+            'pos_remove_order_lines/static/src/xml/order_line_delete_icon.xml',
+            'pos_remove_order_lines/static/src/xml/order_line_clear_all.xml',
+            'pos_remove_order_lines/static/src/js/order_line_delete_icon.js',
+            'pos_remove_order_lines/static/src/js/order_line_clear_all.js',
         ],
     },
 }

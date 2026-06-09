@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import io
-import json
-import xlsxwriter
 from odoo import api, fields, models, _, Command
 from datetime import timedelta, date
 from odoo.exceptions import UserError

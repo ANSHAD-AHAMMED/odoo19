@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherited_model_view_form" model="ir.ui.view">
+        <field name="name">res.users.form.inherit.properties</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//h5[@name='h5_phone']" position="after">
+                <p>
+                    Latitude and Longitude
+                    <field name="is_lan_long" class="w-75"/>
+                </p>
+                <p>
+                    Latitude:
+                    <field name="latitude" placeholder="Latitude" class="w-75"/>
+                </p>
+                <p>
+                    Longitude:
+                    <field name="longitude" placeholder="Longitude" class="w-75"/>
+                </p>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
