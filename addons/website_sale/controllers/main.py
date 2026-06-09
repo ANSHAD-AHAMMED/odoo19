@@ -435,10 +435,24 @@ class WebsiteSale(payment_portal.PaymentPortal):
 
         category_entries = Category
         if category:
-            category_entries = not search and category.child_id or category.child_id.filtered(lambda c: c.id in search_categories.ids)
+            available_categories = category.child_id.filtered(
+                lambda c: c.can_access_from_current_website()
+            )
+            category_entries = (
+                (not search
+                and available_categories)
+                or available_categories.filtered(lambda c: c.id in search_categories.ids)
+            )
             if not category_entries:
                 parent = category.parent_id
-                category_entries = not search and parent.child_id or parent.child_id.filtered(lambda c: c.id in search_categories.ids)
+                available_categories = parent.child_id.filtered(
+                    lambda c: c.can_access_from_current_website()
+                )
+                category_entries = (
+                    (not search
+                    and available_categories)
+                    or available_categories.filtered(lambda c: c.id in search_categories.ids)
+                )
             if not search and not request.env.user._is_internal():
                 # We know the user has access to `categs` and `search_categories` because they come
                 # from a regular `search`, but we have not checked access to `category`'s children,
@@ -799,7 +813,9 @@ class WebsiteSale(payment_portal.PaymentPortal):
         ProductCategory = request.env['product.public.category']
         product_markup_data = [product._to_markup_data(request.website)]
         original_category = category
-        category = category or product.public_categ_ids[:1]
+        category = category or product.public_categ_ids.filtered(
+            lambda c: c.can_access_from_current_website()
+        )[:1]
         if category:
             # Add breadcrumb's SEO data.
             product_markup_data.append(self._prepare_breadcrumb_markup_data(
@@ -1566,7 +1582,11 @@ class WebsiteSale(payment_portal.PaymentPortal):
     )
     def express_checkout_shipping_address_compute_taxes(self):
         order_sudo = request.cart
-        order_sudo._recompute_taxes()
+        try:
+            order_sudo.with_context(is_express_checkout_flow=True)._recompute_taxes()
+        except ValidationError:
+            return {'external_tax_error': True}
+
         amount_without_delivery = order_sudo._compute_amount_total_without_delivery()
 
         return payment_utils.to_minor_currency_units(

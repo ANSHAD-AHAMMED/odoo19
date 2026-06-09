@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_hospital_appointment_root" name="Hospital Appointment"/>
+
+    <menuitem id="menu_hospital_appointment" parent="menu_hospital_appointment_root" name="Hospital Appointment"/>
+
+    <menuitem id="menu_patient" parent="menu_hospital_appointment" name="Patient"
+              action="action_patient"/>
+    <menuitem id="menu_hospital_department" parent="menu_hospital_appointment" name="Department"
+              action="action_hospital_department"/>
+    <menuitem id="menu_hospital_appointment_view" parent="menu_hospital_appointment" name="Appointment"
+              action="action_hospital_appointment"/>
+</odoo> 

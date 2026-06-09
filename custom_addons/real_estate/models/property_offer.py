@@ -27,30 +27,6 @@ class PropertyOffer(models.Model):
         'The offer amount should be a Positive number.',
     )
 
-    # from datetime import timedelta
-    #
-    # def action_generate_installments(self):
-    #     for rec in self:
-    #         if not rec.installment_count:
-    #             raise UserError("Installment count must be greater than 0.")
-    #
-    #         installment_amount = rec.installment_amount or (rec.loan_amount / rec.installment_count)
-    #
-    #         lines = []
-    #         date = rec.start_date or fields.Date.today()
-    #
-    #         for i in range(rec.installment_count):
-    #             lines.append((0, 0, {
-    #                 'loan_id': rec.id,
-    #                 'date': date,
-    #                 'amount': installment_amount,
-    #                 'paid': False,
-    #             }))
-    #             date = date + timedelta(days=30)  # monthly approx
-    #
-    #         rec.loan_line_ids = lines
-    #         rec.state = 'ongoing’
-
     # SET THE STAGE INTO OFFER ACCEPTED, IF A OFFER IS ACCEPTED
     def action_confirm(self):
         for record in self:
@@ -67,18 +43,6 @@ class PropertyOffer(models.Model):
         for record in self:
             record.status = ("reject")
         return True
-
-    # paid_amount = fields.Float(
-    #     string="Paid Amount",
-    #     compute="_compute_paid_amount",
-    #     store=True
-    # )
-    #
-    # balance_amount = fields.Float(
-    #     string="Balance Amount",
-    #     compute="_compute_balance_amount",
-    #     store=True
-    # )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -108,18 +72,6 @@ class PropertyOffer(models.Model):
     def _compute_total_offer_days(self):
         for record in self:
             record.expiry_date = record.offer_start_date + relativedelta(days=record.validity)
-
-    # @api.depends('loan_line_ids.paid', 'loan_line_ids.amount')
-    # def _compute_paid_amount(self):
-    #     for rec in self:
-    #         rec.paid_amount = sum(
-    #             line.amount for line in rec.loan_line_ids if line.paid
-    #         )
-    #
-    # @api.depends('paid_amount', 'total_payable')
-    # def _compute_balance_amount(self):
-    #     for rec in self:
-    #         rec.balance_amount = rec.total_payable - rec.paid_amount
 
     # TO PREVENT THE END DATE SET IN THE PAST
     @api.constrains('expiry_date')

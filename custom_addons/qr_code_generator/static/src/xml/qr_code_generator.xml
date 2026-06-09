@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="qr_code_generator.systray_icon">
+        <div class="position-relative">
+
+            <div class="p-3" t-on-click="openQRData">
+                <i class="fa fa-qrcode" style="color: white; font-size: 18px;"/>
+            </div>
+
+            <div t-if="state.open"
+                 class="position-absolute bg-white p-3 rounded"
+                 style="width: 240px; top: 100%; z-index: 1000;">
+
+                <p class="mb-2">QR Code Generator</p>
+                <input
+                    type="text"
+                    class="mb-2"
+                    placeholder="Input"
+                    t-att-value="state.text"
+                    t-on-input="onInputChange"
+                />
+                <div class="row">
+                    <button class="btn btn-primary m-2" style="width:100px;" t-on-click="generateQRData">
+                        Generate
+                    </button>
+                    <button class="btn btn-primary m-2" style="width:100px;" t-on-click="clearQRData">
+                        Clear
+                    </button>
+                </div>
+
+                <div>
+                    <div t-if="state.text" t-ref="qrContainer" class="mt-2"/>
+                    <div t-else=""><p>Type something</p></div>
+                </div>
+            </div>
+
+        </div>
+    </t>
+</templates>

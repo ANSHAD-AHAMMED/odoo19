@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    date_start = fields.Datetime(string="Start Date111", compute="_compute_date_start") #
+    date_start = fields.Datetime(string="Start Date", compute="_compute_date_start") #
     emp_experience = fields.Selection(
         string="Experience",
         selection=[

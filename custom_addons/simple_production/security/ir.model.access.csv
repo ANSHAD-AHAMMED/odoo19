@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_simple_production,access.simple.production,model_simple_production,base.group_user,1,1,1,1
+access_component_products,access.component.products,model_component_products,base.group_user,1,1,1,1
+access_simple_product_bom,access.simple.product.bom,model_simple_product_bom,base.group_user,1,1,1,1
+access_bom_component_products,access.bom.component.products,model_bom_component_products,base.group_user,1,1,1,1
