@@ -20,6 +20,8 @@
     'data': [
         'security/ir.model.access.csv',
         'views/mrp_production_ext_views.xml',
+        'views/product_template_views.xml',
+        # 'views/mrp_production_material_line_views.xml',
         'views/mrp_production_menu.xml',
     ],
 
