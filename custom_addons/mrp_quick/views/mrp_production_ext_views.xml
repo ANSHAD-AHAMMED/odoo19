@@ -12,7 +12,7 @@
     </record>
 
     <!-- List View -->
-    <record id="view_library_book_list" model="ir.ui.view">
+    <record id="view_production_ext_list" model="ir.ui.view">
         <field name="name">mrp.production.ext.list</field>
         <field name="model">mrp.production.ext</field>
         <field name="arch" type="xml">
@@ -22,7 +22,6 @@
                 <field name="bom_id"/>
                 <field name="quantity"/>
                 <field name="planned_date"/>
-                <!--                <field name="planned_date"/>-->
             </list>
         </field>
     </record>
@@ -34,18 +33,45 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="state" widget="statusbar"
-                           status_visible="coming_soon,available,unavailable,"/>
+                    <button name="confirm_mrp" type="object" string="Confirm" class="oe_highlight"
+                            title="Mark as Schedule"
+                    />
+                    <button name="start_production" type="object" string="In progress" class="oe_highlight"
+                            title="Mark as Schedule"
+                    />
+                    <button name="done_mrp" type="object" string="Done" class="oe_highlight"
+                            title="Mark as Schedule"
+                    />
+                    <button name="cancel_mrp" type="object" string="Cancel" class="oe_highlight"
+                            title="Mark as Schedule"
+                    />
+                    <button name="consume_mrp" type="object" string="Consume" class="oe_highlight"
+                            title="Mark as Schedule"
+                    />
+                    <button name="partially_produce" type="object" string="Produce Partially" class="oe_highlight"
+                            title="Mark as Schedule"
+                    />
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_consumed_products"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+
+                            <field name="consumed_products" widget="statinfo" string="Consumed products"/>
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="name"/>
-                            <field name="product_id"/>
+                            <field name="product_id" domain="[('is_manufacturable', '=', True)]"/>
                             <field name="bom_id"/>
                             <field name="quantity"/>
                             <field name="planned_date"/>
                             <field name="is_available"/>
+                            <field name="produced_qty"/>
                         </group>
                     </group>
                     <notebook>
@@ -56,6 +82,7 @@
                                     <field name="required_qty"/>
                                     <field name="available_qty"/>
                                     <field name="consumed_qty"/>
+                                    <field name="remaining_qty"/>
                                 </list>
                             </field>
                         </page>
