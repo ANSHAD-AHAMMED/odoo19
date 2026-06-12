@@ -11,7 +11,6 @@ patch(Orderline.prototype, {
         this.numberBuffer = useService("number_buffer");
     },
     async clear_button_fun(ev) {
-        console.log("Button clicked!");
         this.numberBuffer.sendKey('Backspace');
         this.numberBuffer.sendKey('Backspace');
     }

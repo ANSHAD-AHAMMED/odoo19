@@ -9,11 +9,6 @@
         'hr_timesheet',
         'hr_holidays'
     ],
-    'data': [
-        # 'security/leave_restriction_security.xml',
-        # 'views/account_analytic_line_views.xml',
-        # 'views/project_project_views.xml',
-    ],
     'installable': True,
     'auto_install': True,
 }

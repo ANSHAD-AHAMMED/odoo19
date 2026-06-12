@@ -2,7 +2,6 @@
 from ast import literal_eval
 from odoo import fields, models
 
-
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
     
@@ -14,7 +13,6 @@ class ResConfigSettings(models.TransientModel):
     restricted_customer_tags = fields.Many2many(
         'res.partner.category',
         string="Restricted Customer Tags"
-        # config_parameter='credit_limit_restriction.restricted_customer_tags',
     )
 
     def set_values(self):

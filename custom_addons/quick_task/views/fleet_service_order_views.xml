@@ -33,6 +33,9 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="checklist_action" type="object" string="Produce Partially" class="oe_highlight"
+                            title="Mark as Schedule"
+                    />
                     <field name="state" widget="statusbar"
                            status_visible="coming_soon,available,unavailable,"/>
                 </header>

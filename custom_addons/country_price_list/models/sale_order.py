@@ -6,7 +6,6 @@ class SaleOrder(models.Model):
 
     @api.onchange('partner_id')
     def pricelist_selection(self):
-
         """ Select pricelist based on customer's country """
         price_lists = self.env['country.pricelist'].search([
             ('country_id', '=', self.partner_id.country_id),

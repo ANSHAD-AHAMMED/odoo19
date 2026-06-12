@@ -12,10 +12,8 @@ class AccountMove(models.Model):
 
         for record in self:
             if record.payment_state == 'paid' and record.checkout_id:
-
                 checkout = record.checkout_id
 
-                # Only update if still unavailable
                 for line in checkout.checkout_line_ids:
                     if line.book_id and line.book_id.status != 'available':
                         line.book_id.sudo().status = 'available'

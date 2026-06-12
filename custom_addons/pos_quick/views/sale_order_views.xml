@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_form_pos_counter1" model="ir.ui.view">
+        <field name="name">sale.order.form.pos.counter.payment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_pay_at_counter"
+                        string="Pay at the Counter"
+                        type="object"
+                        class="btn-primary"
+                />
+            </xpath>
+            <xpath expr="//field[@name='state']"
+                   position="attributes">
+                <selection string="Paid at Counter" value="paid_at_counter"/>
+            </xpath>
+            <xpath expr="//page[@name='other_information']" position="inside">
+                <group>
+                    <field name="pos_order_id" string="POS Order"/>
+                    <field name="pos_session_id" string="POS session"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="readonly">state in ('done', 'cancel', 'paid_at_counter')</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -25,48 +25,4 @@
         </field>
     </record>
 
-<!--    &lt;!&ndash; Form View &ndash;&gt;-->
-<!--    <record id="view_library_book_form" model="ir.ui.view">-->
-<!--        <field name="name">mrp.production.ext.form</field>-->
-<!--        <field name="model">mrp.production.ext</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <form>-->
-<!--                <sheet>-->
-<!--                    <div class="oe_button_box" name="button_box">-->
-<!--                        <button name="action_consumed_products"-->
-<!--                                type="object"-->
-<!--                                class="oe_stat_button"-->
-<!--                                icon="fa-pencil-square-o">-->
-
-<!--                            <field name="consumed_products" widget="statinfo" string="Consumed products"/>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                    <group>-->
-<!--                        <group>-->
-<!--                            <field name="name"/>-->
-<!--                            <field name="product_id"/>-->
-<!--                            <field name="bom_id"/>-->
-<!--                            <field name="quantity"/>-->
-<!--                            <field name="planned_date"/>-->
-<!--                            <field name="is_available"/>-->
-<!--                        </group>-->
-<!--                    </group>-->
-<!--                    <notebook>-->
-<!--                        <page string="Part">-->
-<!--                            <field name="material_line_ids">-->
-<!--                                <list editable="bottom">-->
-<!--                                    <field name="product_id" required="1"/>-->
-<!--                                    <field name="required_qty"/>-->
-<!--                                    <field name="available_qty"/>-->
-<!--                                    <field name="consumed_qty"/>-->
-<!--                                </list>-->
-<!--                            </field>-->
-<!--                        </page>-->
-<!--                    </notebook>-->
-
-<!--                </sheet>-->
-<!--            </form>-->
-<!--        </field>-->
-<!--    </record>-->
-
 </odoo>

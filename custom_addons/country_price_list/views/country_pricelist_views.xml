@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
-
     <!-- List View -->
     <record id="view_library_book_list" model="ir.ui.view">
         <field name="name">country.pricelist.list</field>
         <field name="model">country.pricelist</field>
         <field name="arch" type="xml">
             <list>
-                <!--                <field name="id"/>-->
                 <field name="name"/>
                 <field name="country_id"/>
                 <field name="pricelist_id"/>

@@ -9,8 +9,7 @@ class XLSXReportController(http.Controller):
     @http.route('/xlsx_reports', type='http', auth='user')
     def xlsx_reports(self, options, output_format, report_name):
         """ Return data to python file passed from the js """
-        # session_unique_id = request.session.uid
-        # report_object = request.env['library.checkout'].with_user(session_unique_id)
+
         options = json.loads(options) #convert json string into python object
         try:
             if output_format == 'xlsx':
@@ -21,7 +20,6 @@ class XLSXReportController(http.Controller):
                               content_disposition(f"{report_name}.xlsx")
                     )]
                 )
-                # wizard_id = options.get('model_id')
                 wizard = request.env['library.report.wizard'].with_user(
                     request.session.uid
                 ).create({

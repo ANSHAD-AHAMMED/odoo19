@@ -13,33 +13,23 @@ class ResPartner(models.Model):
             ('state', '=', 'over_due'),
         ])
 
-    # checkout_line_ids = fields.One2many('library.checkout.line', 'partner_id',)
     borrow_limit = fields.Integer(string="Borrow Limit", default=1)
     late_count = fields.Integer(compute="_compute_late_count", store=True)
     books = fields.Integer(string="Borrowed books", compute="_compute_book_count", store=True)
-
     total_penalty = fields.Float(compute="_compute_late_count", store=True)
 
     @api.model_create_multi
     def create(self, vals_list):
         """ Add the books borrow limit when create new partner """
-        print("vals_list=",vals_list)
         limit_param = self.env['ir.config_parameter'].sudo().get_param(
             'library_management.maximum_borrow_books'
         )
-        print('maximum_borrow_books=',limit_param)
 
         limit = int(limit_param) if limit_param else 0
 
         for vals in vals_list:
-            print('borrow limit=',self.borrow_limit)
             if 'borrow_limit' in vals:
-                print('hi')
-            # print("vals=",vals)
-            # print("borrow_limit=",type(self.borrow_limit))
-            # print("limit=",type(limit))
                 vals['borrow_limit'] = limit
-                print("vals=",vals['borrow_limit'])
         return super().create(vals_list)
 
     def action_late_return_details(self):
@@ -51,8 +41,6 @@ class ResPartner(models.Model):
             ])
             partner.late_count = len(checkouts)
             partner.total_penalty = sum(checkouts.mapped('penalty'))
-            print('partner.late_count=', partner.late_count)
-            print('partner.total_penalty=', partner.total_penalty)
 
         self.ensure_one()
         return {
@@ -84,7 +72,6 @@ class ResPartner(models.Model):
                 ('partner_id', '=', partner.id),
             ])
             partner.books = len(books)
-            print("book.books=",partner.books)
 
         self.ensure_one()
 

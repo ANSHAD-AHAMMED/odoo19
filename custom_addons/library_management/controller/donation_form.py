@@ -11,7 +11,7 @@ class DonationForm(http.Controller):
         """ Render the book donation form """
         print('start')
         genre = request.env['library.genre'].sudo().search([])
-        return request.render('library_management.book_donation_form_template',{
+        return request.render('library_management.p',{
             'genre': genre,
         })
 

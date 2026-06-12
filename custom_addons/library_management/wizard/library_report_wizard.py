@@ -88,8 +88,6 @@ class LibraryReportWizard(models.TransientModel):
                 lt.name,
                 lg.name
         """
-        # print('values=', values)
-        # print('query=', query)
         order = self.sort_order_by or 'ASC'
         sort = self.sort_by
         query += f" ORDER BY {sort} {order} NULLS LAST"
@@ -190,11 +188,8 @@ class LibraryReportWizard(models.TransientModel):
         for col,(headers,width) in enumerate(zip(headers, col_width)):
 
             if data > 0:
-                print('data=', data)
                 for i in range(data):
-                    print("hi")
                     if options['partner_id']:
-                        print("first if")
                         row += 1
                         sheet.write(row, 0, "Partner",filter)
                         sheet.write(row, 1, self.partner_id.name, filter)
@@ -218,14 +213,12 @@ class LibraryReportWizard(models.TransientModel):
                     start_table = row + 2
                     break
 
-            # row += 2
             sheet.write(start_table, col, headers, col_head)
             sheet.set_column(col, col, width)
 
 
         start_table += 1
 
-        # row_ids = start_table
         for row_ids, record in enumerate(lines, start = start_table):
             column = 0
 
@@ -233,17 +226,14 @@ class LibraryReportWizard(models.TransientModel):
             sheet.write(row_ids, column, record.get('reference_id') or '', cell_format)
 
             if not options['partner_id']:
-                print("partner id=",record.get('partner_id'))
                 column += 1
                 sheet.write(row_ids, column, record.get('partner_id') or '', cell_format)
 
             if not options['book_id']:
-                print("book name=",record.get('book_name'))
                 column += 1
                 sheet.write(row_ids, column, record.get('book_name') or '', cell_format)
 
             column += 1
-            print('author')
             sheet.write(row_ids, column, record.get('author') or '', cell_format)
 
 
@@ -252,30 +242,23 @@ class LibraryReportWizard(models.TransientModel):
             due_d = record.get('due_date')
 
             if not options['checkout_date']:
-                print('checkout date')
                 column += 1
                 sheet.write(row_ids, column, str(checkout)[:10] if checkout else '', cell_format)
 
             if not options['return_date']:
-                print('return date')
                 column += 1
                 sheet.write(row_ids, column, str(return_d)[:10] if return_d else '', cell_format)
 
             column += 1
-            print('due_date')
             sheet.write(row_ids, column, str(due_d)[:10] if due_d else '', cell_format)
 
             if not options['tag_id']:
-                print('tag id')
                 column += 1
                 sheet.write(row_ids, column, record.get('tag') or '', cell_format)
 
             if not options['genre_id']:
-                print('genre id')
                 column += 1
                 sheet.write(row_ids, column, record.get('genre') or '', cell_format)
-
-            print('===================================================================')
 
         workbook.close()
         output.seek(0)

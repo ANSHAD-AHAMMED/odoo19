@@ -20,7 +20,7 @@
 
     'data': [
         'security/ir.model.access.csv',
-        'views/quick_task_menu.xml',
+        'views/fleet_service_order_views.xml',
         'views/quick_task_menu.xml',
     ],
 

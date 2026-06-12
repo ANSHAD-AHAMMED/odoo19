@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="hr_employee_view_form_inherit_employee_level" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.start.date</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button id="action_employee_level_increment"
+                        name="action_employee_level_increment"
+                        string="promote"
+                        type="object"
+                        class="btn-primary"
+                        groups="hr.group_hr_user"
+                        invisible="flag"
+                />
+                </xpath>
+
+                <xpath expr="//h5/field[@name='category_ids']" position="after">
+                    <group>
+                        <field name="employee_level_id"/>
+                        <field name="salary"/>
+                        <field name="add_timesheet_automatically"/>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

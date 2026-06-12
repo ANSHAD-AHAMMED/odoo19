@@ -13,26 +13,19 @@ class PurchaseOrder(models.Model):
         ))
 
         if is_attachment:
-            print('is_attachment=', is_attachment)
-
             attachment = self.env['ir.attachment'].search([
                 ('res_model', '=', 'purchase.order'),
                 ('res_id', '=', self.id)
             ])
 
-            print('attachment=',attachment)
-
             if attachment:
                 if '.pdf' in attachment.name or '.jpeg' in attachment.name or '.png' in attachment.name or 'jpg' in attachment.name:
-                    print('attachment=',attachment.name)
                     return super().button_confirm()
                 else:
                     raise UserError('only image and pdf are allowed')
             if not attachment:
-                print('hi')
                 raise UserError('attachment is mandatory')
 
         else:
-            print('is_attachment=', is_attachment)
             return super().button_confirm()
 

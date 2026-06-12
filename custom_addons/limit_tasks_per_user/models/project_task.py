@@ -25,4 +25,3 @@ class ProjectTask(models.Model):
                         if tasks > self.project_id.user_task_limit:
                             raise UserError("This User reached the task limit")
         return tasks
-

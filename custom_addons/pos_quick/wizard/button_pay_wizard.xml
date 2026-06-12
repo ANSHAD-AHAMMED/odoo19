@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_pos_payment_wizard_form" model="ir.ui.view">
+        <field name="name">sale.pos.payment.wizard.form</field>
+        <field name="model">sale.pos.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Pay at the Counter">
+                <field name="payment_line_ids">
+                    <list string="Payment Methods" editable="bottom">
+                        <field name="payment_method_id"/>
+                        <field name="amount" sum="Total Paid"/>
+                    </list>
+                </field>
+                <group>
+                    <group>
+                        <field name="total_amount" readonly="1" string="Order Total"/>
+                    </group>
+                    <group>
+                        <field name="paid_amount" readonly="1" string="Paid Amount"/>
+                        <field name="remaining_amount" readonly="1" string="Remaining"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button name="action_confirm_payment"
+                            string="Confirm Payment"
+                            type="object"
+                            class="btn-primary"
+                            data-hotkey="v"/>
+                    <button string="Discard"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+</odoo>
