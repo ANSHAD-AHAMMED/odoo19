@@ -14,7 +14,6 @@ class SuggestionWizard(models.TransientModel):
         res = super().default_get(fields_list)
 
         book_ids = self.env.context.get('default_book_id')
-        print(book_ids)
 
         if book_ids:
             books = self.env['library.book'].browse(book_ids)
@@ -38,7 +37,6 @@ class SuggestionWizard(models.TransientModel):
     def action_apply(self):
         """ To add the books from wizard to checkout_line_ids """
         checkout_id = self.env.context.get('checkout_id')
-        print(checkout_id)
 
         if not checkout_id:
             return

@@ -57,7 +57,4 @@ class ProductPriceWizard(models.TransientModel):
             product.list_price = self.new_price
 
             product = self.env['product.product'].search([])
-            print("All Products:", product.mapped('name'))
-
             premium_products = product.filtered(lambda p: p.list_price > 1000)
-            print("Premium Products:", premium_products.mapped('name'))

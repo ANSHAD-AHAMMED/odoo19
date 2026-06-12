@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="add_product_inherited_model_view_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Add Product">
+                    <field name="add_product_ids" string="ADD Product">
+                        <list editable="bottom">
+                            <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="lst_price"/>
+                        <field name="is_available"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

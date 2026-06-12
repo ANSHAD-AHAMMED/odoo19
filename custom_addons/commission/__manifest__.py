@@ -4,7 +4,7 @@
     'version': '19.0.1.0.0',
     'category': 'Odoo Development',
     'summary': 'Modify existing web pages through code',
-    'depends': ['sale'],  # Core website and eCommerce
+    'depends': ['sale'],
     'data': [
         'security/commission_security.xml',
         'security/ir.model.access.csv',

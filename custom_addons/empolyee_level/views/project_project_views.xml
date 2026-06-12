@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="generate_timesheets_inherited_model_view_form" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.project.task</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="hr_timesheet.project_invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button id="generate_timesheet" name="generate_timesheet" string="Generate Timesheet" type="object" class="btn-primary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

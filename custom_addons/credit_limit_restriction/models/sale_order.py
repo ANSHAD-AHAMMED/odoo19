@@ -17,20 +17,11 @@ class SalesOrder(models.Model):
         limit = float(self.env['ir.config_parameter'].sudo().get_param(
             'credit_limit_restriction.credit_limit_threshold', default=0
         ))
-        print('limit=', limit)
 
         restricted_customer_tags = safe_eval(restricted_customer_tag)
-        print('restricted_customer_tags=', restricted_customer_tags)
-
         customer_tags = self.partner_id.category_id.ids
-        print('catgory_id=',customer_tags)
-
         common_tags = any(item in customer_tags for item in restricted_customer_tags)
-        print('common_tags=', common_tags)
-
         over_limit = self.partner_id.credit > limit
-        print('credit=',self.partner_id.credit)
-        print('over_limit=', over_limit)
 
         if common_tags and over_limit:
             raise UserError("customer have reached the due limit also this customer have restricted tags")

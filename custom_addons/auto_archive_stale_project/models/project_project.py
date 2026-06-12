@@ -12,23 +12,19 @@ class ProjectTask(models.Model):
 
     @api.depends('project_id')
     def compute_task_ids(self):
-        print(1)
         person = self.task_ids.stage_id.ids
         self.write({
             'project_task_ids': person
         })
 
     def archive_project(self):
-        """ To Archive task based on its the timesheet """
-
+        """ To Archive task based on it's the timesheet """
         is_archive = self.env['ir.config_parameter'].sudo().get_param(
             'auto_archive_stale_project.archive_project'
         )
-
         today = date.today()
         archive_date = timedelta(days=30)
         archive_task = today - archive_date
-
         projects = self.env['project.project'].search([])
 
         if is_archive:
@@ -40,7 +36,6 @@ class ProjectTask(models.Model):
 
                 for task in tasks:
                     task_active = False
-
                     timesheet = self.env['account.analytic.line'].search([
                         ('task_id', '=', task.id),
                     ]).mapped('date')

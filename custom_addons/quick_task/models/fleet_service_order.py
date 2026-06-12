@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models, _, Command
+from odoo.exceptions import ValidationError, UserError
 
 
 class FleetServiceOrder(models.Model):
@@ -86,3 +86,16 @@ class FleetServiceOrder(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code('fleet.service.order')
 
         return super().create(vals_list)
+
+    def checklist_action(self):
+        if self.state == 'confirmed':
+            a = []
+            if self.type_id:
+                print(self.type_id)
+                if not self.checklist_ids:
+                    for rec in self.type_id:
+                        a.append(Command.create({'order_id': rec.id, 'task_name': rec.name}))
+                    self.checklist_ids = a
+                else:
+                    raise UserError("checklist_ids is not empty")
+        print(self.type_id)

@@ -7,5 +7,4 @@ class LibraryGenre(models.Model):
 
     name = fields.Char(string="Name")
     description = fields.Char(string="Description")
-
     book_ids = fields.One2many('library.book','genre_id', string="Author")

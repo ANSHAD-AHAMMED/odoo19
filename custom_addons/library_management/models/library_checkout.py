@@ -138,7 +138,6 @@ class LibraryCheckout(models.Model):
                     ('partner_id', '=', partner.id),
                     ('state', '=', 'over_due')
                 ])
-                print("overdue=", overdue)
 
                 if overdue > 0:
                     raise UserError("you have overdue books")
@@ -282,10 +281,8 @@ class LibraryCheckout(models.Model):
             # Reminder BEFORE due date
             if not rec.reminder_sent and due_date == today + timedelta(days=reminder_days):
                 template = self.env.ref('library_management.email_template_reminder')
-                print("template=", template)
                 template.send_mail(rec.id, force_send=True)
                 rec.reminder_sent = True
-                print("reminder_send=", rec.reminder_sent)
 
             # Overdue
             if not rec.overdue_sent and due_date < today:
@@ -293,7 +290,6 @@ class LibraryCheckout(models.Model):
                 template.send_mail(rec.id, force_send=True)
                 rec.overdue_sent = True
                 rec.state = 'over_due'
-                print("overdue_sent=", rec.overdue_sent)
 
     def _compute_invoice_data(self):
         """ Calculate invoice data """

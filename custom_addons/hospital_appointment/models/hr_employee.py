@@ -12,6 +12,7 @@ class HrEmployee(models.Model):
 
     @api.depends('appointment_id.state')
     def _compute_treatment_progress(self):
+        """ Compute treatment progress """
         appointments = self.env['hospital.appointment'].search([
             ('doctor_id', 'in', self.id),
         ])

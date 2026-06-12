@@ -9,4 +9,3 @@ class LibraryAuthor(models.Model):
     description = fields.Char(string="Description")
 
     book_ids = fields.One2many('library.book', 'author_id', string="Books")
-

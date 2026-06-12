@@ -6,5 +6,4 @@ class LibraryBookCondition(models.Model):
     _description = 'Library Book Condition'
 
     name = fields.Char(string="Name")
-
     book_ids = fields.One2many('library.book','condition_id', string="Author")

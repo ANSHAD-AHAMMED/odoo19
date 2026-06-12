@@ -10,7 +10,6 @@
                 <group string="Last Price Updated">
                     <field name="is_manufacturable"/>
                 </group>
-
             </xpath>
         </field>
     </record>

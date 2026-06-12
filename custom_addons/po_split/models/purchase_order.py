@@ -31,22 +31,17 @@ class PurchaseOrder(models.Model):
     @api.depends("split_order_ids")
     def _compute_split_order_count(self):
         """ count how many split orders """
-        print('1')
-        print('split_order_ids=',self.split_order_ids)
         for record in self:
             record.split_order_count = len(record.split_order_ids)
-            print('split_order_count=', record.split_order_count)
 
     def _create_split_order_for_vendor(self, vendor, lines):
         """ Create purchase order for each vendor """
-        print('4')
         self.ensure_one()
         new_order = self.env["purchase.order"].create({
             "partner_id": vendor.id,
             "date_order": self.date_order,
             "date_planned": self.date_planned,
             "company_id": self.company_id.id,
-
             "is_split_order": True,
             "original_order_id": self.id,
         })
@@ -64,38 +59,22 @@ class PurchaseOrder(models.Model):
             key = line.product_id.id
             product_qty_map[key]['qty'] += line.product_qty
             product_qty_map[key]['line'] = line
-            print('line=', line.product_id.name)
-            print('product_qty_map=', product_qty_map)
-            # product = line.product_id
-            # if not line.product_id in lines:
-            #     print('hi')
-            # existing_line = line.filtered(lambda l: l.product_id.id == line.product.id)
-            # print('existing_line=', existing_line)
-            #
-            # if existing_line:
-            #     print('a')
-            #     existing_line.order_line.product_qty += line.product_qty
-            #
-            # else:
+
         for product_id, data in product_qty_map.items():
-            print('b')
             line = data["line"]
-            print('data=',data['qty'])
-            print('date_planned=',line.date_planned)
+
             self.env["purchase.order.line"].create({
                 "order_id": new_order.id,
                 "product_id": product_id,
                 "product_qty": data['qty'],
                 "date_planned": line.date_planned,
             })
-                # print('new_line=', new_line)
 
         return new_order
 
     def _get_lowest_price_vendor(self, product):
         """ find lowest price vendor """
-        print('2')
-        print('product=', product)
+
         supplierinfo_records = self.env["product.supplierinfo"].search([
             ("product_tmpl_id", "=", product.product_tmpl_id.id),
             ("product_id", "=", False),
@@ -107,7 +86,6 @@ class PurchaseOrder(models.Model):
         for info in supplierinfo_records:
 
             price = info.price
-            print('price=', price)
 
             if lowest_price is None or price < lowest_price:
                 lowest_price = price
@@ -117,7 +95,6 @@ class PurchaseOrder(models.Model):
 
     def _build_vendor_line_map(self):
         """ group vendor and product lines"""
-        print('3')
         vendor_map = defaultdict(list) # Automatically create list for each vendor
         for line in self.order_line:
             vendor,price = self._get_lowest_price_vendor(line.product_id,)
@@ -127,28 +104,20 @@ class PurchaseOrder(models.Model):
         return vendor_map
 
     def button_confirm(self):
-        print('5')
         confirm_normally = self.env["purchase.order"]
 
 
         for order in self:
             vendor_map = order._build_vendor_line_map()
-            print('vendor_map=', vendor_map)
 
             if order.is_split_order or not order.order_line or len(vendor_map) <= 1:
-                print('suuuuiii')
-                confirm_normally |= order ###
+                confirm_normally |= order
                 continue
 
             split_orders = self.env["purchase.order"]
-            print('hellllo')
 
             for vendor, lines in vendor_map.items():
-                print('abc')
                 split_orders |= order._create_split_order_for_vendor(vendor, lines)
-                print('vendor=', vendor)
-                print('lines=', lines)
-                print('split_orders=', split_orders)
 
             if split_orders:
                 order.split_order_ids = [(6, 0, split_orders.ids)]

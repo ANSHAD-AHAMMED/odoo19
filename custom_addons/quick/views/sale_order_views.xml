@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asale_task_inherited_sales_model_view_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_project_task_view"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-undo">
+<!--                    <field string="Late Return" name="late_count" widget="statinfo"/>-->
+                </button>
+            </div>
+            <xpath expr="//header" position="inside">
+                <button id="generate_tasks_sale"
+                        name="generate_tasks_sale"
+                        string="Generate project"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'sale'"
+                />
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="project_id" string="Project" domain="[('id', 'in', project_ids)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

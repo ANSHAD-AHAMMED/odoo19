@@ -56,8 +56,6 @@ class MrpProduction(models.Model):
 
         self.write({'material_line_ids': [Command.clear()]})
 
-        # new_lines = self.env['mrp.production.material.line']
-
         for qty in self.bom_id.bom_line_ids:
 
             if qty.product_qty > qty.product_id.qty_available:
@@ -65,11 +63,6 @@ class MrpProduction(models.Model):
 
             else:
                 self.write({'is_available': True})
-            # new_line = self.env['mrp.production.material.line'].new({
-            #     'product_id': qty.product_id.id,
-            #     'required_qty': qty.product_qty,
-            #     'available_qty': qty.product_id.qty_available,
-            # })
             self.update({
                 'material_line_ids':[(fields.Command.create({
                     'product_id':qty.product_id.id,
@@ -83,10 +76,6 @@ class MrpProduction(models.Model):
         for qty in self.material_line_ids:
             total = qty.required_qty * self.quantity
             qty.write({'required_qty': total})
-
-
-
-                # raise UserError('It have less quantity')
 
     def confirm_mrp(self):
         if self.bom_id:
@@ -159,23 +148,17 @@ class MrpProduction(models.Model):
             'state': 'done',
         })
         for qty in self.material_line_ids:
-            print(1)
 
             if qty.required_qty > qty.product_id.qty_available:
-                print(2)
                 self.write({'is_available':False})
                 break
 
             elif qty.required_qty == qty.product_id.qty_available:
                 self.write({'is_available': True})
             else:
-                print(3)
                 self.write({'is_available':True})
-        # for qty in self.material_line_ids:
-        #     if qty.required_qty > qty.available_qty:
 
     def partially_produce(self):
-        # produce = 0
         quantity = 0
         l_qty = []
         for qty in self.material_line_ids:
@@ -204,4 +187,3 @@ class MrpProduction(models.Model):
                     'consumed_qty': value,
                     'remaining_qty': self.material_line_ids[index].available_qty - value,
                 })
-        print(manufacture)

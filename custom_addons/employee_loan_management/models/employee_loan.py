@@ -9,7 +9,6 @@ class EmployeeLoan(models.Model):
         string="Name",
         default=lambda self: _('New'),
         copy=False)
-    # name = fields.Char(string='Name')
     employee_id = fields.Many2one('hr.employee')
     loan_amount = fields.Float(string='Loan Amount')
     installment_count = fields.Integer(string='Installment Count')

@@ -45,7 +45,6 @@
                     <button name="delete_appointment" type="object" string="Cancel" class="oe_highlight"
                             title="Mark as Cancel" invisible="state in ['completed']"
                     />
-<!--                    invisible="state in ['check_out','returned','over_due','cancel']"-->
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>

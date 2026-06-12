@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 {
     'name': 'estate account',
     'version': '19.0.1.0',

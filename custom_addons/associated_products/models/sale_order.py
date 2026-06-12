@@ -11,15 +11,11 @@ class SaleOrder(models.Model):
         """ add or remove associated product from sale order """
         for order in self:
             associated_products = order.partner_id.associated_product_id
-            print('associated_products=', associated_products)
-            associated_product_ids = associated_products.ids
-            print('associated_product_ids=', associated_product_ids)
+            # associated_product_ids = associated_products.ids
 
             if order.associated_product:
                 existing_product_ids = order.order_line.mapped('product_id.name')
-                print('existing_product_ids=', existing_product_ids)
                 new_lines = self.env['sale.order.line']
-                print('new_lines=', new_lines)
                 for product in associated_products:
                     if product.id not in existing_product_ids:
                         new_line = self.env['sale.order.line'].new({
@@ -29,7 +25,4 @@ class SaleOrder(models.Model):
                             'is_associate': True,
                         })
                         new_lines |= new_line
-                        print('new_line=', new_line)
-                        print('new_lines=', new_lines)
                 order.order_line |= new_lines
-                print('order.order_line=', order.order_line)

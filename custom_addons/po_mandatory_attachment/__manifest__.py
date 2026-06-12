@@ -16,8 +16,6 @@
         'purchase',
     ],
     'data':[
-        # 'security/ir.model.access.csv',
-        # 'views/purchase_order_views.xml',
         'views/res_config_settings_views.xml',
     ]
 }

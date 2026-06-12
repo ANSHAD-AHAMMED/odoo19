@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         Sale Order Form — Inherit: add button, session field & state
+         ============================================================ -->
+    <record id="view_sale_order_form_pos_counter" model="ir.ui.view">
+        <field name="name">sale.order.form.pos.counter.payment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- ── 1. "Pay at the Counter" button in the header ──── -->
+            <!--
+                Conditions for visibility:
+                  • state == 'sale'      → order is confirmed
+                  • pay_at_counter_visible is True  (same check, driven by compute)
+                The button disappears once state becomes 'paid_at_counter'.
+            -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_pay_at_counter"
+                        string="Pay at the Counter"
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-cash-register"
+                        invisible="not pay_at_counter_visible"
+                        data-hotkey="p"/>
+            </xpath>
+
+            <!-- ── 2. "Paid at Counter" state in the status bar ─── -->
+            <!--
+                Inserted before the 'cancel' state so the visual flow
+                reads: Draft → Quotation → Sale Order → Paid at Counter
+                (cancel stays at the end just like the native layout).
+            -->
+            <xpath expr="//field[@name='state']/selection[@string='Cancelled']"
+                   position="before">
+                <selection string="Paid at Counter" value="paid_at_counter"/>
+            </xpath>
+
+            <!-- ── 3. POS Session field in the "Other Info" tab ─── -->
+            <xpath expr="//page[@name='other_info']//group[@name='sales_person']"
+                   position="inside">
+                <field name="pos_session_id"
+                       domain="[('state','=','opened')]"
+                       options="{'no_create': True}"
+                       string="POS Session"/>
+            </xpath>
+
+            <!-- ── 4. Linked POS Order field (traceability) ──────── -->
+            <xpath expr="//page[@name='other_info']//group[@name='sales_person']"
+                   position="inside">
+                <field name="pos_order_id"
+                       readonly="1"
+                       invisible="not pos_order_id"
+                       string="POS Order"/>
+            </xpath>
+
+            <!-- ── 5. Lock order lines & fields when paid_at_counter -->
+            <!--
+                Mirror the 'cancel' behaviour: make the order read-only.
+                We piggyback on the existing 'locked' mechanism by making
+                the entire order_line tree uneditable in this state.
+            -->
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="readonly">state in ('done', 'cancel', 'paid_at_counter')</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ============================================================
+         Sale Order List View — show "Paid at Counter" state label
+         (no structural change needed; selection_add on the field
+          is enough for list/kanban display)
+         ============================================================ -->
+
+</odoo>
